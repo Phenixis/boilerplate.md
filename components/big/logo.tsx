@@ -8,7 +8,7 @@ export default function Logo({
 }) {
     return (
         <Link href="/" className="flex items-center justify-center">
-            <CircleIcon className="h-12 w-12 text-orange-500" />
+            <CircleIcon className="h-12 w-12 text-brand-primary" />
             {
                 title ? (
                     <h1 className="ml-2 text-xl font-semibold text-gray-900">

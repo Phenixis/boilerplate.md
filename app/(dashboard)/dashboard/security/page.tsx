@@ -103,7 +103,7 @@ export default function SecurityPage() {
             )}
             <Button
               type="submit"
-              className="bg-orange-500 hover:bg-orange-600 text-white"
+              className="bg-brand-primary hover:bg-brand-primary/90 text-white"
               disabled={isPasswordPending}
             >
               {isPasswordPending ? (
