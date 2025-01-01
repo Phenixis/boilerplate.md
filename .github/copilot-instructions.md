@@ -33,4 +33,18 @@ Here are some guidelines to assist you in contributing to the project. The instr
 29. Use 4 spaces to indent the code block.
 30. Never modify code that is not directly related to the task.
 31. Add a section at the end of every answer that gives 1 to 3 suggestions for improvement on what you just wrote, or what you analyzed.
-32. When you are describing a change for a commit message, always use the prefix "chore:" for non-functional changes, "feat:" for new features, "fix:" for bug fixes, "refactor:" for code refactoring, "test:" for adding tests, "docs:" for documentation changes, "style:" for code style changes, "perf:" for performance improvements, "revert:" for reverting changes. You can also combine them : "fix: style: ..." for example.
+32. When you are describing a change for a commit message, always use the following prefixes. Keep in mind that you can combine them : "fix: style: ..." for example. The goal is to be as concise but precise as possible.
+    - "chore:" for non-functional changes
+    - "feat:" for new features
+    - "fix:" for bug fixes
+    - "refactor:" for code refactoring
+    - "test:" for adding tests
+    - "docs:" for documentation changes
+    - "style:" for code style changes
+    - "perf:" for performance improvements
+    - "revert:" for reverting changes
+    - "security:" for security changes
+    - "done:" for completed tasks
+    - "wip:" for work in progress
+    - "started:" for new tasks
+    
