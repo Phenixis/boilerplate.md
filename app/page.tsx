@@ -11,7 +11,7 @@ export default function HomePage() {
                         <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
                             <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl md:text-6xl">
                                 Focus on
-                                <span className="block text-brand-primary">the value proposition</span>
+                                <strong className="block text-brand-primary">the value proposition</strong>
                             </h1>
                             <ol className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                                 <li>Describe the actual state</li>
