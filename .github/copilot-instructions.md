@@ -47,4 +47,6 @@ Here are some guidelines to assist you in contributing to the project. The instr
     - "done:" for completed tasks
     - "wip:" for work in progress
     - "started:" for new tasks
-    
+33. When using a hook (e.g. useState, useEffect), remember to check if `'use client';` is the first line of the file. If not, add it.
+34. You should use the client-side as little as possible, prefer server-side rendering.
+35. Remember that the app use a the `/app` router, so you should use it for all the routes. You should check if the solution you suggest is compatible with the `/app` router.
