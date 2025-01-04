@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
-import { UserProvider } from '@/lib/auth';
+import { ValuesProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 import Header from '@/components/big/header';
 import Footer from '@/components/big/footer';
@@ -23,20 +23,22 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     let userPromise = getUser();
+    let appName = process.env.APP_NAME || '[App]';
+    let companyName = process.env.COMPANY_NAME || 'Company';
 
     return (
         <html
             lang="en"
-            className={`bg-white dark:bg-gray-950 text-black dark:text-white ${manrope.className}`}
+            className={`bg-white text-black dark:text-white ${manrope.className}`}
         >
-            <body className="min-h-screen bg-gray-50 flex flex-col justify-between">
-                <div className="h-full">
-                    <UserProvider userPromise={userPromise}>
+            <body>
+                <ValuesProvider userPromise={userPromise} appName={appName} companyName={companyName}>
+                    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col justify-between">
                         <Header />
                         {children}
-                    </UserProvider>
-                </div>
-                <Footer />
+                        <Footer />
+                    </main>
+                </ValuesProvider>
             </body>
         </html >
     );
