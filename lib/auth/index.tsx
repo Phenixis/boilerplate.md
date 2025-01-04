@@ -10,27 +10,33 @@ import {
 import { use } from 'react';
 import { User } from '@/lib/db/schema';
 
-type UserContextType = {
+type ValuesContextType = {
   user: User | null;
+  appName: string;
+  companyName: string;
   setUser: (user: User | null) => void;
 };
 
-const UserContext = createContext<UserContextType | null>(null);
+const ValuesContext = createContext<ValuesContextType | null>(null);
 
-export function useUser(): UserContextType {
-  let context = useContext(UserContext);
+export function useValues(): ValuesContextType {
+  let context = useContext(ValuesContext);
   if (context === null) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useValues must be used within a ValuesProvider');
   }
   return context;
 }
 
-export function UserProvider({
+export function ValuesProvider({
   children,
   userPromise,
+  appName,
+  companyName,
 }: {
   children: ReactNode;
   userPromise: Promise<User | null>;
+  appName: string;
+  companyName: string;
 }) {
   let initialUser = use(userPromise);
   let [user, setUser] = useState<User | null>(initialUser);
@@ -40,8 +46,8 @@ export function UserProvider({
   }, [initialUser]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <ValuesContext.Provider value={{ user, setUser, appName, companyName}}>
       {children}
-    </UserContext.Provider>
+    </ValuesContext.Provider>
   );
 }
