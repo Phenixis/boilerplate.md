@@ -31,11 +31,11 @@ export default function Footer() {
                         </p>
                         <p className="text-gray-700 hover:text-gray-900 hover:underline">
                             <Link href="/sign-up">
-                                Register
+                                Sign Up
                             </Link>
                         </p>
                         <p className="text-gray-700 hover:text-gray-900 hover:underline">
-                            <a href="mailto:contact@wisecart.app" target="_blank" rel="noopener noreferrer">
+                            <a href="mailto:" target="_blank" rel="noopener noreferrer">
                                 Support
                             </a>
                         </p>
