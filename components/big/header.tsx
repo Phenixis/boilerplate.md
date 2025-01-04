@@ -11,14 +11,14 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useUser } from '@/lib/auth';
+import { useValues } from '@/lib/auth';
 import { signOut } from '@/app/(login)/actions';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/big/logo';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { user, setUser } = useUser();
+    const { user, setUser } = useValues();
     const router = useRouter();
 
     async function handleSignOut() {

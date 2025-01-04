@@ -1,16 +1,17 @@
-'use server';
+'use client';
 
 import { Table2 } from "lucide-react";
 import Link from "next/link";
+import { useValues } from "@/lib/auth";
 
-export default async function Logo({
+export default function Logo({
     title = false,
     className
 }: {
     title?: boolean,
-    className?: string
+    className?: string,
 }) {
-    const appName = process.env.APP_NAME || '[App]';
+    const { appName } = useValues();
 
     return (
         <Link href="/" className={`flex items-center justify-center ${className}`}>
