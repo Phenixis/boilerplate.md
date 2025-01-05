@@ -38,7 +38,7 @@ export default function Header() {
                                 <Avatar className="cursor-pointer size-9">
                                     <AvatarImage alt={user.name || ''} />
                                     <AvatarFallback>
-                                        {user.email
+                                        {(user.name ? user.name : user.email)
                                             .split(' ')
                                             .map((n) => n[0])
                                             .join('')}
