@@ -9,7 +9,7 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="lg:grid lg:grid-cols-12 lg:gap-8">
                         <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-                            <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl md:text-6xl">
+                            <h1 className="text-4xl font-bold text-gray-900 dark:text-slate-100 tracking-tight sm:text-5xl md:text-6xl">
                                 Focus on
                                 <strong className="block text-brand-primary">the value proposition</strong>
                             </h1>
@@ -29,7 +29,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="py-16 bg-white w-full">
+            <section className="py-16 bg-white dark:bg-black w-full">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="lg:grid lg:grid-cols-3 lg:gap-8">
                         <div>
@@ -42,7 +42,7 @@ export default function HomePage() {
                                 </svg>
                             </div>
                             <div className="mt-5">
-                                <h2 className="text-lg font-medium text-gray-900">
+                                <h2 className="text-lg font-medium text-gray-900 dark:text-slate-100">
                                     First Benefits
                                 </h2>
                                 <p className="mt-2 text-base text-gray-500">
@@ -56,7 +56,7 @@ export default function HomePage() {
                                 <Database className="h-6 w-6" />
                             </div>
                             <div className="mt-5">
-                                <h2 className="text-lg font-medium text-gray-900">
+                                <h2 className="text-lg font-medium text-gray-900 dark:text-slate-100">
                                     Second Benefits
                                 </h2>
                                 <p className="mt-2 text-base text-gray-500">
@@ -70,7 +70,7 @@ export default function HomePage() {
                                 <CreditCard className="h-6 w-6" />
                             </div>
                             <div className="mt-5">
-                                <h2 className="text-lg font-medium text-gray-900">
+                                <h2 className="text-lg font-medium text-gray-900 dark:text-slate-100">
                                     Third Benefits
                                 </h2>
                                 <p className="mt-2 text-base text-gray-500">
@@ -82,15 +82,15 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="py-16 bg-gray-50">
+            <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
                         <div>
-                            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+                            <h2 className="text-3xl font-bold text-gray-900 dark:text-slate-100 sm:text-4xl">
                                 Ready to [action] ?
                             </h2>
-                            <p className="mt-3 max-w-3xl text-lg text-gray-500">
-                                USe a sense of urgency and limited availability to encourage the user to take action now.
+                            <p className="mt-3 max-w-3xl text-lg text-gray-700 dark:text-gray-300">
+                                Use a sense of urgency and limited availability to encourage the user to take action now.
                             </p>
                         </div>
                         <div className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
