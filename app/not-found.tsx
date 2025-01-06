@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className="flex items-center justify-center h-full">
       <div className="max-w-md space-y-8 p-4 text-center">
         <Logo />
-        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-slate-100 tracking-tight">
           Page Not Found
         </h1>
         <p className="text-base text-gray-500">
