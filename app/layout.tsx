@@ -33,7 +33,7 @@ export default function RootLayout({
         >
             <body>
                 <ValuesProvider userPromise={userPromise} appName={appName} companyName={companyName}>
-                    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col justify-between">
+                    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col justify-between">
                         <Header />
                         {children}
                         <Footer />
