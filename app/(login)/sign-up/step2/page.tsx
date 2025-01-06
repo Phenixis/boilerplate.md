@@ -17,8 +17,6 @@ type ActionState = {
 export default function Step2Page() {
     const { user, appName } = useValues();
 
-    console.log(user);
-
     if (user?.name) {
         window.location.href = '/dashboard';
     }
