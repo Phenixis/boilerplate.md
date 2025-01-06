@@ -18,7 +18,7 @@ export default function Logo({
             <Table2 className="h-12 w-12 text-brand-primary" />
             {
                 title ? (
-                    <h1 className="ml-2 text-xl font-semibold text-gray-900">
+                    <h1 className="ml-2 text-xl font-semibold text-gray-900 dark:text-slate-100">
                         {appName}
                     </h1>
                 ) : null
