@@ -1,6 +1,6 @@
 'use client';
 
-import { Table2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useValues } from "@/lib/auth";
 
@@ -15,7 +15,7 @@ export default function Logo({
 
     return (
         <Link href="/" className={`flex items-center justify-center ${className}`}>
-            <Table2 className="h-12 w-12 text-brand-primary" />
+            <Image src="/icon.svg" alt={appName} width={32} height={32} />
             {
                 title ? (
                     <h1 className="ml-2 text-xl font-semibold text-gray-900 dark:text-slate-100">
