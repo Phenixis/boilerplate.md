@@ -18,7 +18,7 @@ export async function comparePasswords(
 }
 
 type SessionData = {
-  user: { id: number };
+  user: { id: string };
   expires: string;
 };
 
@@ -37,10 +37,36 @@ export async function verifyToken(input: string) {
   return payload as SessionData;
 }
 
+import { auth } from "../../auth"
+import { NextResponse } from 'next/server';
+
 export async function getSession() {
-  const session = (await cookies()).get('session')?.value;
-  if (!session) return null;
-  return await verifyToken(session);
+  const credentialsSession = (await cookies()).get('session')?.value;
+  if (!credentialsSession) {
+    const session = await auth();
+    if (!session) {
+      return null;
+    }
+    return session;
+  };
+  let res = NextResponse.next();
+
+  const parsed = await verifyToken(credentialsSession);
+  const expiresInOneDay = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+  res.cookies.set({
+    name: 'session',
+    value: await signToken({
+      ...parsed,
+      expires: expiresInOneDay.toISOString(),
+    }),
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    expires: expiresInOneDay,
+  });
+
+  return parsed;
 }
 
 export async function setSession(user: NewUser) {
