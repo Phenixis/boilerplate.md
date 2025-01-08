@@ -1,34 +1,26 @@
-import { desc, and, eq, isNull } from 'drizzle-orm';
+import { desc, and, eq, isNull, or } from 'drizzle-orm';
 import { db } from './drizzle';
 import { activityLogs, teamMembers, teams, users } from './schema';
-import { cookies } from 'next/headers';
-import { verifyToken, getSession } from '@/lib/auth/session';
+import { getSession } from '@/lib/auth/session';
 
 export async function getUser() {
   const session = await getSession();
 
-  const sessionCookie = (await cookies()).get('session');
-  if (!sessionCookie || !sessionCookie.value) {
+  if (!session) {
     return null;
   }
 
-  const sessionData = await verifyToken(sessionCookie.value);
-  if (
-    !sessionData ||
-    !sessionData.user ||
-    typeof sessionData.user.id !== 'string'
-  ) {
-    return null;
-  }
-
-  if (new Date(sessionData.expires) < new Date()) {
+  if (new Date(session.expires) < new Date()) {
     return null;
   }
 
   const user = await db
     .select()
     .from(users)
-    .where(and(eq(users.id, sessionData.user.id), isNull(users.deletedAt)))
+    .where(and(
+      (session.user.id ? eq(users.id, session.user?.id) : eq(users.email, session.user?.email)),
+      isNull(users.deletedAt))
+    )
     .limit(1);
 
   if (user.length === 0) {
