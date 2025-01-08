@@ -1,6 +1,6 @@
 {
-  "id": "ebc79494-80f9-4458-8168-c0ff1ecba6dd",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "50491776-c03d-4f79-8731-33a548a42d46",
+  "prevId": "ebc79494-80f9-4458-8168-c0ff1ecba6dd",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -528,7 +528,7 @@
           "name": "password_hash",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "role": {
           "name": "role",
