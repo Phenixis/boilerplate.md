@@ -28,7 +28,7 @@ import {
 
 async function logActivity(
   teamId: number | null | undefined,
-  userId: number,
+  userId: string,
   type: ActivityType,
   ipAddress?: string
 ) {
@@ -68,6 +68,10 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
   }
 
   const { user: foundUser, team: foundTeam } = userWithTeam[0];
+  
+  if (!foundUser.passwordHash) {
+    return { error: "You signed in with a provider. Please use that provider's sign-in method." };
+  }
 
   const isPasswordValid = await comparePasswords(
     password,
@@ -224,6 +228,10 @@ export const updatePassword = validatedActionWithUser(
   async (data, _, user) => {
     const { currentPassword, newPassword } = data;
 
+    if (!user.passwordHash) {
+      return { error: "You signed in with a provider. Please use that provider's sign-in method." };
+    }
+
     const isPasswordValid = await comparePasswords(
       currentPassword,
       user.passwordHash
@@ -262,6 +270,10 @@ export const deleteAccount = validatedActionWithUser(
   deleteAccountSchema,
   async (data, _, user) => {
     const { password } = data;
+
+    if (!user.passwordHash) {
+      return { error: "You signed in with a provider. Please use that provider's sign-in method." };
+    }
 
     const isPasswordValid = await comparePasswords(password, user.passwordHash);
     if (!isPasswordValid) {
