@@ -26,7 +26,7 @@ import {
   validatedActionWithUser,
 } from '@/lib/auth/middleware';
 
-async function logActivity(
+export async function logActivity(
   teamId: number | null | undefined,
   userId: string,
   type: ActivityType,
@@ -205,11 +205,14 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   redirect('/sign-up/step2');
 });
 
+import { signOut as googleSignOut } from "@/auth"
+
 export async function signOut() {
   const user = (await getUser()) as User;
   const userWithTeam = await getUserWithTeam(user.id);
   await logActivity(userWithTeam?.teamId, user.id, ActivityType.SIGN_OUT);
   (await cookies()).delete('session');
+  await googleSignOut();
 }
 
 const updatePasswordSchema = z
