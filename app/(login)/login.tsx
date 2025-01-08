@@ -12,7 +12,6 @@ import { ActionState } from '@/lib/auth/middleware';
 import Logo from '@/components/big/logo';
 import { signIn as googleSignIn } from "next-auth/react"
 
-
 export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect');
@@ -148,7 +147,10 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           </div>
 
           <div className="mt-6">
-            <button onClick={() => googleSignIn("google", { redirectTo: "/dashboard" })}>Sign In</button>
+            <button onClick={async () => {
+              const result = await googleSignIn("google", { redirectTo: "/dashboard" });
+              console.log(result)
+            }}>Sign In with Google</button>
           </div>
         </div>
       </div>
