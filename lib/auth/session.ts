@@ -40,10 +40,11 @@ export async function verifyToken(input: string) {
 import { auth } from "../../auth"
 import { NextResponse } from 'next/server';
 
-export async function getSession() {
+export async function getSession(authMethod ?: Function | null) {
   const credentialsSession = (await cookies()).get('session')?.value;
   if (!credentialsSession) {
-    const session = await auth();
+    // console.log(authMethod == null ? "Not" : "", "using authMethod")
+    const session = authMethod ? await authMethod() : await auth();
     if (!session) {
       return null;
     }
