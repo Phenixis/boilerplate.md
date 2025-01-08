@@ -2,9 +2,11 @@ import { desc, and, eq, isNull } from 'drizzle-orm';
 import { db } from './drizzle';
 import { activityLogs, teamMembers, teams, users } from './schema';
 import { cookies } from 'next/headers';
-import { verifyToken } from '@/lib/auth/session';
+import { verifyToken, getSession } from '@/lib/auth/session';
 
 export async function getUser() {
+  const session = await getSession();
+
   const sessionCookie = (await cookies()).get('session');
   if (!sessionCookie || !sessionCookie.value) {
     return null;
@@ -14,7 +16,7 @@ export async function getUser() {
   if (
     !sessionData ||
     !sessionData.user ||
-    typeof sessionData.user.id !== 'number'
+    typeof sessionData.user.id !== 'string'
   ) {
     return null;
   }
@@ -64,7 +66,7 @@ export async function updateTeamSubscription(
     .where(eq(teams.id, teamId));
 }
 
-export async function getUserWithTeam(userId: number) {
+export async function getUserWithTeam(userId: string) {
   const result = await db
     .select({
       user: users,
@@ -99,7 +101,7 @@ export async function getActivityLogs() {
     .limit(10);
 }
 
-export async function getTeamForUser(userId: number) {
+export async function getTeamForUser(userId: string) {
   const result = await db.query.users.findFirst({
     where: eq(users.id, userId),
     with: {

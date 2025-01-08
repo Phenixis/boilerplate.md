@@ -5,18 +5,26 @@ import {
   text,
   timestamp,
   integer,
+  primaryKey,
+  boolean,
+  uuid,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+import type { AdapterAccountType } from "next-auth/adapters"
 
 export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   name: varchar('name', { length: 100 }),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: text('password_hash').notNull(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  passwordHash: text('password_hash'),
   role: varchar('role', { length: 20 }).notNull().default('member'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
   deletedAt: timestamp('deleted_at'),
+  image: text("image"),
 });
 
 export const teams = pgTable('teams', {
@@ -33,9 +41,9 @@ export const teams = pgTable('teams', {
 
 export const teamMembers = pgTable('team_members', {
   id: serial('id').primaryKey(),
-  userId: integer('user_id')
+  userId: text("userId")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   teamId: integer('team_id')
     .notNull()
     .references(() => teams.id),
@@ -48,7 +56,9 @@ export const activityLogs = pgTable('activity_logs', {
   teamId: integer('team_id')
     .notNull()
     .references(() => teams.id),
-  userId: integer('user_id').references(() => users.id),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
   action: text('action').notNull(),
   timestamp: timestamp('timestamp').notNull().defaultNow(),
   ipAddress: varchar('ip_address', { length: 45 }),
@@ -61,12 +71,69 @@ export const invitations = pgTable('invitations', {
     .references(() => teams.id),
   email: varchar('email', { length: 255 }).notNull(),
   role: varchar('role', { length: 50 }).notNull(),
-  invitedBy: integer('invited_by')
+  invitedBy: text("userId")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   invitedAt: timestamp('invited_at').notNull().defaultNow(),
   status: varchar('status', { length: 20 }).notNull().default('pending'),
 });
+
+export const accounts = pgTable(
+  "account",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").$type<AdapterAccountType>().notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("providerAccountId").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (account) => [
+    {
+      compoundKey: primaryKey({
+        columns: [account.provider, account.providerAccountId],
+      }),
+    },
+  ]
+)
+
+export const authenticators = pgTable(
+  "authenticator",
+  {
+    credentialID: text("credentialID").notNull().unique(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    providerAccountId: text("providerAccountId").notNull(),
+    credentialPublicKey: text("credentialPublicKey").notNull(),
+    counter: integer("counter").notNull(),
+    credentialDeviceType: text("credentialDeviceType").notNull(),
+    credentialBackedUp: boolean("credentialBackedUp").notNull(),
+    transports: text("transports"),
+  },
+  (authenticator) => [
+    {
+      compositePK: primaryKey({
+        columns: [authenticator.userId, authenticator.credentialID],
+      }),
+    },
+  ]
+)
+
+export const sessions = pgTable("session", {
+  sessionToken: text("sessionToken").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+})
 
 export const teamsRelations = relations(teams, ({ many }) => ({
   teamMembers: many(teamMembers),
@@ -77,6 +144,10 @@ export const teamsRelations = relations(teams, ({ many }) => ({
 export const usersRelations = relations(users, ({ many }) => ({
   teamMembers: many(teamMembers),
   invitationsSent: many(invitations),
+  activityLogs: many(activityLogs),
+  authenticators: many(authenticators),
+  accounts: many(accounts),
+  sessions: many(sessions),
 }));
 
 export const invitationsRelations = relations(invitations, ({ one }) => ({
@@ -108,6 +179,27 @@ export const activityLogsRelations = relations(activityLogs, ({ one }) => ({
   }),
   user: one(users, {
     fields: [activityLogs.userId],
+    references: [users.id],
+  }),
+}));
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const authenticatorsRelations = relations(authenticators, ({ one }) => ({
+  user: one(users, {
+    fields: [authenticators.userId],
+    references: [users.id],
+  }),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
     references: [users.id],
   }),
 }));
