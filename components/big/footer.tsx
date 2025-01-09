@@ -10,7 +10,7 @@ export default function Footer() {
     const personnalLinks = [
         { title: 'Wisecart', href: 'http://wisecart.app/' },
         { title: 'Boilerplate', href: 'https://boilerplate.maximeduhamel.com/' },
-        { title: 'Blog', href: 'https://maximeduhamel.com/' },
+        { title: 'Blog', href: 'http://maximeduhamel.com/' },
     ]
 
     return (
