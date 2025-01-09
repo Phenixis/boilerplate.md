@@ -3,11 +3,9 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import { ValuesProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
-import Header from '@/components/big/header';
-import Footer from '@/components/big/footer';
 
 export const metadata: Metadata = {
-    title: 'Next.js SaaS Starter',
+    title: 'Next.js Boilerplate',
     description: 'Get started quickly with Next.js, Postgres, and Stripe.',
 };
 
@@ -33,11 +31,7 @@ export default function RootLayout({
         >
             <body>
                 <ValuesProvider userPromise={userPromise} appName={appName} companyName={companyName}>
-                    <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col justify-between">
-                        <Header />
-                        {children}
-                        <Footer />
-                    </main>
+                    {children}
                 </ValuesProvider>
             </body>
         </html >
