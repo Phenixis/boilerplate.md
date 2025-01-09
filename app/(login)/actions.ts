@@ -440,3 +440,15 @@ export const inviteTeamMember = validatedActionWithUser(
     return { success: 'Invitation sent successfully' };
   }
 );
+
+export const validateEmail = async (email: string) => {
+  const result = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+  
+  console.log(result);
+  
+  return result.length !== 0;
+}
