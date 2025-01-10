@@ -19,9 +19,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
-  const user = await getUser();
-
-  if (user && unaccessibleWhenConnected.includes(pathname)) {
+  if (session && unaccessibleWhenConnected.includes(pathname)) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 }
