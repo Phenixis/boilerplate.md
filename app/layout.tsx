@@ -5,7 +5,10 @@ import { ValuesProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 
 export const metadata: Metadata = {
-    title: 'Next.js Boilerplate',
+    title: {
+        template: '%s | ' + (process.env.APP_NAME || 'NextJs Boilerplate'),
+        default: process.env.APP_NAME || 'NextJs Boilerplate',
+    },
     description: 'Get started quickly with Next.js, Postgres, and Stripe.',
 };
 

@@ -1,3 +1,9 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Terms Of Services',
+};
+
 export default function Tos() {
     const appName = process.env.APP_NAME || '[App]';
     const companyName = process.env.COMPANY_NAME || '[Company]';
