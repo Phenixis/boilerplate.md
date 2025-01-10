@@ -15,6 +15,8 @@ import { signIn as googleSignIn } from "next-auth/react"
 export default function Page() {
     const [emailValidated, setEmailValidated] = useState(0);
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
+
     const searchParams = useSearchParams();
     const redirect = searchParams.get('redirect');
     const priceId = searchParams.get('priceId');
@@ -24,10 +26,15 @@ export default function Page() {
             async (state, data) => {
                 const email = data.get('email');
                 if (email && typeof email === 'string') {
-                    const result = await validateEmail(email);
-                    console.log(result);
-                    setEmailValidated(result ? 1 : -1);
                     setEmail(email);
+                    const result = await validateEmail(email);
+
+                    console.log(result);
+                    
+                    setEmailValidated(result);
+                    setError(
+                        result === -1 ? "You signed in with a provider. Please sign in with the same provider." : ''
+                    );
                 }
                 return state;
             } : emailValidated === 1 ? signIn : signUp,
@@ -93,12 +100,13 @@ export default function Page() {
                                 defaultValue={email}
                                 onChange={() => {
                                     setEmailValidated(0);
+                                    setError('');
                                 }}
                             />
                         </div>
                     </div>
 
-                    <div className={`${emailValidated == 0 ? 'hidden' : 'block'}`}>
+                    <div className={`${emailValidated > 0 ? 'block' : 'hidden'}`}>
                         <Label
                             htmlFor="password"
                             className="block text-sm font-medium text-gray-700"
@@ -115,7 +123,7 @@ export default function Page() {
                                         "current-password" :
                                         "new-password"
                                 }
-                                required={emailValidated !== 0}
+                                required={emailValidated > 0}
                                 minLength={8}
                                 maxLength={100}
                                 className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
@@ -127,12 +135,15 @@ export default function Page() {
                     {state?.error && (
                         <div className="text-red-500 text-sm">{state.error}</div>
                     )}
+                    {error && (
+                        <div className="text-gray-500 text-sm">{error}</div>
+                    )}
 
                     <div className="space-y-2 sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:space-x-2">
                         <Button
                             type="submit"
                             className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-brand-primary/90 hover:bg-brand-primary/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary"
-                            disabled={pending}
+                            disabled={pending || emailValidated < 0}
                         >
                             {pending ? (
                                 <>

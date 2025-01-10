@@ -68,7 +68,7 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
   }
 
   const { user: foundUser, team: foundTeam } = userWithTeam[0];
-  
+
   if (!foundUser.passwordHash) {
     return { error: "You signed in with a provider. Please use that provider's sign-in method." };
   }
@@ -441,14 +441,26 @@ export const inviteTeamMember = validatedActionWithUser(
   }
 );
 
+enum emailValidationResult {
+  KNOWN = 1,
+  UNKNOWN = 2,
+  PROVIDER = -1,
+};
+
 export const validateEmail = async (email: string) => {
-  const result = await db
+  const data = await db
     .select()
     .from(users)
     .where(eq(users.email, email))
     .limit(1);
-  
-  console.log(result);
-  
-  return result.length !== 0;
+
+  if (data.length === 0) {
+    return emailValidationResult.UNKNOWN;
+  }
+
+  if (data[0].passwordHash === null) {
+    return emailValidationResult.PROVIDER;
+  }
+
+  return emailValidationResult.KNOWN;
 }
