@@ -16,12 +16,12 @@ const arrowVariants: Variants = {
   },
 };
 
-const UploadIcon = () => {
+const UploadIcon = ({ className } : { className?: string }) => {
   const controls = useAnimation();
 
   return (
     <div
-      className="cursor-pointer select-none p-2 hover:bg-accent rounded-md transition-colors duration-200 flex items-center justify-center"
+      className={`cursor-pointer select-none p-2 rounded-md transition-colors duration-200 flex items-center justify-center ${className}`}
       onMouseEnter={() => controls.start('animate')}
       onMouseLeave={() => controls.start('normal')}
     >
