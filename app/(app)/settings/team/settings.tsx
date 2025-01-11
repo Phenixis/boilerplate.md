@@ -20,7 +20,7 @@ export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
     FormData
   >(removeTeamMember, { error: '', success: '' });
 
-  const getUserDisplayName = (user: Pick<User, 'id' | 'name' | 'email'>) => {
+  const getUserDisplayName = (user: Pick<User, 'id' | 'name' | 'email' | 'image'>) => {
     return user.name || user.email || 'Unknown User';
   };
 
@@ -64,16 +64,15 @@ export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
             {teamData.teamMembers.map((member, index) => (
               <li key={member.id} className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <Avatar>
-                    <AvatarImage
-                      src={`/placeholder.svg?height=32&width=32`}
-                      alt={getUserDisplayName(member.user)}
-                    />
+                  <Avatar className="cursor-pointer size-9">
+                    <AvatarImage src={member.user.image || ''} alt={member.user.name || ''} />
                     <AvatarFallback>
-                      {getUserDisplayName(member.user)
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')}
+                      {
+                        getUserDisplayName(member.user)
+                          .split(' ')
+                          .map((n) => n[0])
+                          .join('')
+                      }
                     </AvatarFallback>
                   </Avatar>
                   <div>

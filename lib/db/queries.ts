@@ -108,6 +108,7 @@ export async function getTeamForUser(userId: string) {
                       id: true,
                       name: true,
                       email: true,
+                      image: true,
                     },
                   },
                 },
