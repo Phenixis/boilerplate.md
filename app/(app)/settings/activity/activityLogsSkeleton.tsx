@@ -8,9 +8,9 @@ export default async function ActivityLogsSkeleton() {
                             <div className="w-5 h-5 text-brand-primary/90" />
                         </div>
                         <div className="flex-1 space-y-1">
-                            <div className="text-sm font-medium text-gray-900 w-24 h-4 bg-gray-200">
+                            <div className="text-sm font-medium text-gray-900 w-24 h-4 bg-gray-200 dark:bg-gray-800">
                             </div>
-                            <div className="text-xs text-gray-500 w-12 h-2 bg-gray-200">
+                            <div className="text-xs text-gray-500 w-12 h-2 bg-gray-200 dark:bg-gray-800">
                             </div>
                         </div>
                     </li>

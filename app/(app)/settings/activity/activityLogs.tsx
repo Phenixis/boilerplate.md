@@ -85,7 +85,7 @@ export default async function ActivityLogs() {
                                 <Icon className="w-5 h-5 text-brand-primary/90" />
                             </div>
                             <div className="flex-1">
-                                <p className="text-sm font-medium text-gray-900">
+                                <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                     {formattedAction}
                                     {log.ipAddress && ` from IP ${log.ipAddress}`}
                                 </p>
