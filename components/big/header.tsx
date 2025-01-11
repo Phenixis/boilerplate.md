@@ -16,6 +16,7 @@ import { signOut } from '@/app/(login)/actions';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/big/logo';
 import DarkModeToggle from './darkModeToggler';
+import Image from 'next/image';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,12 +39,14 @@ export default function Header() {
                         <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                             <DropdownMenuTrigger asChild>
                                 <Avatar className="cursor-pointer size-9">
-                                    <AvatarImage alt={user.name || ''} />
+                                    <AvatarImage src={user.image || ''} alt={user.name || ''} />
                                     <AvatarFallback>
-                                        {(user.name ? user.name : user.email)
-                                            .split(' ')
-                                            .map((n) => n[0])
-                                            .join('')}
+                                        {
+                                            (user.name ? user.name : user.email)
+                                                .split(' ')
+                                                .map((n) => n[0])
+                                                .join('')
+                                        }
                                     </AvatarFallback>
                                 </Avatar>
                             </DropdownMenuTrigger>
