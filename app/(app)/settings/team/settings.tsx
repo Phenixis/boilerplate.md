@@ -7,7 +7,7 @@ import { customerPortalAction } from '@/lib/payments/actions';
 import { useActionState } from 'react';
 import { TeamDataWithMembers, User } from '@/lib/db/schema';
 import { removeTeamMember } from '@/app/(login)/actions';
-import { InviteTeamMember } from './invite-team';
+import { InviteTeamMember } from '../invite-team';
 
 type ActionState = {
   error?: string;
