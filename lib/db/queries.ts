@@ -1,4 +1,4 @@
-import { desc, and, eq, isNull, or } from 'drizzle-orm';
+import { desc, and, eq, isNull, or, isNotNull, count } from 'drizzle-orm';
 import { db } from './drizzle';
 import { activityLogs, teamMembers, teams, users } from './schema';
 import { getSession } from '@/lib/auth/session';
@@ -121,4 +121,25 @@ export async function getTeamForUser(userId: string) {
   });
 
   return result?.teamMembers[0]?.team || null;
+}
+
+export async function getUserImages(n: number) {
+  const data = await db
+    .select({
+      image: users.image,
+    })
+    .from(users)
+    .where(and(isNull(users.deletedAt), isNotNull(users.image)))
+    .limit(n * 2);
+
+  return data.map((d) => d.image).filter((i) => i !== null);
+}
+
+export async function getNumberUsers() {
+  return await db
+    .select({
+      count: count(users.id),
+    })
+    .from(users)
+    .where(isNull(users.deletedAt));
 }
