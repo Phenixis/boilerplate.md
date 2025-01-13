@@ -1,10 +1,10 @@
 import Avatars from "./avatars"
-import AvatarsSkeleton from "./avatarsSkeleton"
+import AvatarsDisplay from "./avatarsDisplay"
 import { Suspense } from "react"
 
 export default function SocialProof() {
     return (
-        <Suspense fallback={<AvatarsSkeleton />}>
+        <Suspense fallback={<AvatarsDisplay />}>
             <Avatars />
         </Suspense>
     )
