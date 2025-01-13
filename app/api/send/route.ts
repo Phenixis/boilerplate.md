@@ -12,7 +12,9 @@ import { sendEmail } from '@/components/email/send_email';
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
     try {
         // Validate request if necessary
-        sendEmail('max.duh22@gmail.com', 'Test email', '<p>This is a test email</p>');
+        const response = await sendEmail('max.duh22@gmail.com', 'Test email', '<p>This is a test email</p>');
+
+        console.log('Email response:', response);
 
         // Process the request and prepare the response
         const responseMessage = { message: 'GET request received successfully' };
