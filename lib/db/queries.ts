@@ -126,13 +126,16 @@ export async function getTeamForUser(userId: string) {
 export async function getUserImages(n: number) {
   const data = await db
     .select({
+      name: users.name,
       image: users.image,
     })
     .from(users)
     .where(and(isNull(users.deletedAt), isNotNull(users.image)))
     .limit(n * 2);
 
-  return data.map((d) => d.image).filter((i) => i !== null);
+  return data
+    .map(d => ({ name: d.name, image: d.image }))
+    .filter(image => image.name !== null && image.image !== null) as { name: string; image: string }[];
 }
 
 export async function getNumberUsers() {
