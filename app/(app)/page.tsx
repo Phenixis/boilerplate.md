@@ -7,7 +7,7 @@ import ABTest from '@/components/utils/ABTest/ABTest';
 export default function HomePage() {
     return (
         <main>
-            <ABTest A={<h1>Test A</h1>} B={<h1>Test B</h1>} idTest="test-1" />
+            {/* <ABTest A={<h1>Test A</h1>} B={<h1>Test B</h1>} idTest="test-1" /> */}
             <section className="py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="lg:grid lg:grid-cols-12 lg:gap-8">
