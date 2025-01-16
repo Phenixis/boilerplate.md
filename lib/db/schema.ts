@@ -229,7 +229,7 @@ export const ABTestRelations = relations(ABTest, ({ many }) => ({
 export const ABTestResultRelations = relations(ABTestResult, ({ one }) => ({
   test: one(ABTest, {
     fields: [ABTestResult.testId],
-    references: [ABTest.id],
+    references: [ABTest.name],
   }),
 }));
 
