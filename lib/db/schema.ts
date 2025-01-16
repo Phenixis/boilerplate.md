@@ -135,6 +135,24 @@ export const sessions = pgTable("session", {
   expires: timestamp("expires", { mode: "date" }).notNull(),
 })
 
+export const ABTest = pgTable('ab_test', {
+  id: serial('id').primaryKey(),
+  description: text('description').notNull(),
+  location: varchar('location', { length: 100 }).notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
+export const ABTestResult = pgTable('ab_test_result', {
+  id: serial('id').primaryKey(),
+  testId: integer('test_id')
+    .notNull()
+    .references(() => ABTest.id),
+  userIP: varchar('user_ip', { length: 45 }).notNull(),
+  variant: varchar('variant', { length: 50 }).notNull(),
+  startingTime: timestamp('starting_time').notNull(),
+  endingTime: timestamp('ending_time').notNull(),
+})
+
 export const teamsRelations = relations(teams, ({ many }) => ({
   teamMembers: many(teamMembers),
   activityLogs: many(activityLogs),
@@ -201,6 +219,17 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, {
     fields: [sessions.userId],
     references: [users.id],
+  }),
+}));
+
+export const ABTestRelations = relations(ABTest, ({ many }) => ({
+  results: many(ABTestResult),
+}));
+
+export const ABTestResultRelations = relations(ABTestResult, ({ one }) => ({
+  test: one(ABTest, {
+    fields: [ABTestResult.testId],
+    references: [ABTest.id],
   }),
 }));
 
