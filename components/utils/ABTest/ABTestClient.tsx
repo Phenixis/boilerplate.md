@@ -4,15 +4,17 @@ import { stillIn } from './actions'
 import { useEffect, useState } from 'react';
 
 export default function ABTestClient({
+    id,
     A,
     B,
-    idTest,
+    testName,
     userIp,
     startTime,
 }: {
+    id: number,
     A: React.ReactElement;
     B: React.ReactElement;
-    idTest: string;
+    testName: string;
     userIp: string;
     startTime: number;
 }) {
@@ -23,7 +25,7 @@ export default function ABTestClient({
 
         setInterval(() => {
             if (document.visibilityState === 'visible') {
-                stillIn(userIp, idTest, startTime);
+                stillIn(id, variant);
             }
         }, 1000);
     }, []);
