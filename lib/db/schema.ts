@@ -136,7 +136,7 @@ export const sessions = pgTable("session", {
 })
 
 export const ABTest = pgTable('ab_test', {
-  id: serial('id').primaryKey(),
+  name: varchar('name').primaryKey(),
   description: text('description').notNull(),
   location: varchar('location', { length: 100 }).notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
@@ -144,9 +144,9 @@ export const ABTest = pgTable('ab_test', {
 
 export const ABTestResult = pgTable('ab_test_result', {
   id: serial('id').primaryKey(),
-  testId: integer('test_id')
+  testId: varchar('test_name')
     .notNull()
-    .references(() => ABTest.id),
+    .references(() => ABTest.name),
   userIP: varchar('user_ip', { length: 45 }).notNull(),
   variant: varchar('variant', { length: 50 }).notNull(),
   startingTime: timestamp('starting_time').notNull(),
@@ -248,6 +248,10 @@ export type TeamDataWithMembers = Team & {
     user: Pick<User, 'id' | 'name' | 'email' | 'image'>;
   })[];
 };
+export type ABTest = typeof ABTest.$inferSelect;
+export type NewABTest = typeof ABTest.$inferInsert;
+export type ABTestResult = typeof ABTestResult.$inferSelect;
+export type NewABTestResult = typeof ABTestResult.$inferInsert;
 
 export enum ActivityType {
   SIGN_UP = 'SIGN_UP',
