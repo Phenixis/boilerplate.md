@@ -7,9 +7,6 @@ export default function ABTestClient({
     id,
     A,
     B,
-    testName,
-    userIp,
-    startTime,
 }: {
     id: number,
     A: React.ReactElement;
@@ -19,15 +16,28 @@ export default function ABTestClient({
     startTime: number;
 }) {
     const [variant, setVariant] = useState('A');
+    const [visible, setVisible] = useState(true);
 
     useEffect(() => {
         setVariant(Math.random() < 0.5 ? 'A' : 'B');
 
         setInterval(() => {
-            if (document.visibilityState === 'visible') {
+            if (visible && document.visibilityState === 'visible') {
                 stillIn(id, variant);
             }
         }, 1000);
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden') {
+                setVisible(false);
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
     }, []);
 
     return (
