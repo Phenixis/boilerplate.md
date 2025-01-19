@@ -4,6 +4,7 @@ import { Manrope } from 'next/font/google';
 import { ValuesProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 import Feedback from '@/components/Feedback/feedback';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
     title: {
@@ -38,6 +39,7 @@ export default function RootLayout({
                     {children}
                     <Feedback />
                 </ValuesProvider>
+                <Toaster />
             </body>
         </html >
     );
