@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
+import Tickets from './tickets';
+import TicketsDisplay from './ticketsDisplay';
 
 export const metadata: Metadata = {
     title: 'Tickets',
@@ -17,8 +19,8 @@ export default function Page() {
                     <CardTitle>Recent Tickets</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <Suspense fallback={<div>Fallback</div>}>
-                        <div>Content</div>
+                    <Suspense fallback={<TicketsDisplay />}>
+                        <Tickets />
                     </Suspense>
                 </CardContent>
             </Card>
