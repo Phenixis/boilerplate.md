@@ -19,3 +19,17 @@ export async function sendFeedback(state: ActionState, data: FormData) {
 
     return { success: 'Feedback sent successfully' };
 }
+
+export async function getFeedbacks(userId?: string, userEmail?: string) {
+    if (!userId && !userEmail) {
+        return { error: 'User ID or Email is required' };
+    }
+
+    const feedbacks = await db
+        .select()
+        .from(ticket)
+        .where(or(eq(ticket.openedBy, userId || ''), eq(ticket.openerEmail, userEmail || '')))
+        .orderBy(desc(ticket.createdAt));
+
+    return feedbacks;
+}
