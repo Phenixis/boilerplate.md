@@ -2,7 +2,7 @@
 
 import { desc, and, eq, isNull, or, isNotNull, count } from 'drizzle-orm';
 import { db } from '@/lib/db/drizzle';
-import { ticket, NewTicket, TicketStatus } from '@/lib/db/schema';
+import { ticket, Ticket, NewTicket, TicketStatus } from '@/lib/db/schema';
 import { ActionState } from '@/lib/auth/middleware';
 
 export async function sendFeedback(state: ActionState, data: FormData) {
@@ -22,10 +22,10 @@ export async function sendFeedback(state: ActionState, data: FormData) {
 
 export async function getFeedbacks(userId?: string, userEmail?: string) {
     if (!userId && !userEmail) {
-        return { error: 'User ID or Email is required' };
+        return [] as Ticket[];
     }
 
-    const feedbacks = await db
+    const feedbacks: Ticket[] = await db
         .select()
         .from(ticket)
         .where(or(eq(ticket.openedBy, userId || ''), eq(ticket.openerEmail, userEmail || '')))
