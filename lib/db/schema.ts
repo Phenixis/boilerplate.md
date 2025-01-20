@@ -157,7 +157,7 @@ export const ticket = pgTable('ticket', {
   id: serial('id').primaryKey(),
   openedBy: text("userId")
     .references(() => users.id, { onDelete: "cascade" }),
-  openerEmail: varchar('opener_email', { length: 255 }).notNull(),
+  openerEmail: varchar('opener_email', { length: 255 }),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
   status: varchar('status', { length: 20 }).notNull().default('open'),
