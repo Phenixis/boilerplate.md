@@ -65,9 +65,9 @@ export default function Feedback() {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Feedback</DialogTitle>
+                    <DialogTitle>Send feedback</DialogTitle>
                     <DialogDescription>
-                        Please let us know how we can improve our website.
+                        Please let me know how I can improve this app. You can also contact me on <a href="https://twitter.com/maxime_duhamel_" target="_blank" className="underline hover:text-gray-900">X</a>.
                     </DialogDescription>
                 </DialogHeader>
                 <form action={feedbackAction} className="gap-4 flex flex-col">
@@ -80,8 +80,12 @@ export default function Feedback() {
                         </div>
                     }
                     <div>
-                        <Label>Feedback</Label>
-                        <Input type="text" name="feedback" id="feedback" required />
+                        <Label>Title</Label>
+                        <Input type="text" name="title" id="title" required />
+                    </div>
+                    <div>
+                        <Label>Description</Label>
+                        <Input type="textarea" name="description" id="description" required />
                     </div>
                     <div className="flex justify-end gap-4">
                         <DialogClose asChild>
