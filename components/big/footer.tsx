@@ -4,7 +4,11 @@ import Logo from '@/components/big/logo';
 import Link from 'next/link';
 import { useValues } from '@/lib/auth';
 
-export default function Footer() {
+export default function Footer({
+    fullWidth
+} : {
+    fullWidth?: boolean
+}) {
     const { appName } = useValues();
 
     const personnalLinks = [
@@ -15,7 +19,7 @@ export default function Footer() {
 
     return (
         <footer className="border-t border-gray-200 dark:border-gray-700">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col justify-between items-center space-y-4">
+            <div className={`${fullWidth ? "" : "max-w-7xl"} mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col justify-between items-center space-y-4`}>
                 <section className="flex justify-between items-start w-full">
                     <article>
                         <h2 className="text-lg text-gray-500 font-black uppercase">Links</h2>
