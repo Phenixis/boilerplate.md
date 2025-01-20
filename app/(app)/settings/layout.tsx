@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Users, Settings, Shield, Activity, Menu } from 'lucide-react';
+import { Users, Settings, Shield, Activity, Menu, Ticket } from 'lucide-react';
 
 export default function DashboardLayout({
   children,
@@ -19,10 +19,11 @@ export default function DashboardLayout({
     { href: '/settings/team', icon: Users, label: 'Team' },
     { href: '/settings/activity', icon: Activity, label: 'Activity' },
     { href: '/settings/security', icon: Shield, label: 'Security' },
-  ];
+    { href: '/settings/ticket', icon: Ticket, label: 'Ticket' },
+  ].sort((a, b) => a.label.localeCompare(b.label));
 
   return (
-    <div className="flex flex-col min-h-[calc(100dvh-68px)] max-w-7xl mx-auto w-full">
+    <div className="flex flex-col min-h-[calc(100dvh-68px)] mx-auto w-full">
       {/* Mobile header */}
       <div className="lg:hidden flex items-center justify-between bg-white border-b border-gray-200 dark:border-gray-800 p-4">
         <div className="flex items-center">
