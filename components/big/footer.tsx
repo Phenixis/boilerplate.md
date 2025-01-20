@@ -72,6 +72,11 @@ export default function Footer() {
                                 )
                             ))
                         }
+                        <p className="text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-300 hover:underline">
+                            <Link href="/run-by-a-human">
+                                Run by a human.
+                            </Link>
+                        </p>
                     </article>
                 </section>
                 <section className="flex justify-between items-center w-full">
