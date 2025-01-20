@@ -2,7 +2,6 @@ import { CreditCard, Database } from 'lucide-react';
 import { Terminal } from './terminal';
 import CTA from '@/components/big/cta';
 import SocialProof from '@/components/big/socialProof';
-import ABTest from '@/components/utils/ABTest/ABTest';
 
 export default function HomePage() {
     return (
