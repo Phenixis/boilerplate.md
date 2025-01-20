@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Users, Settings, Shield, Activity, Menu, Ticket, Home, LogOut } from 'lucide-react';
+import { Users, Settings, Shield, Activity, Ticket, Home, LogOut } from 'lucide-react';
 import { signOut } from '@/app/(login)/actions';
 import { useRouter } from 'next/navigation';
 import { useValues } from '@/lib/auth';
@@ -25,6 +25,12 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+    ChevronsLeftRightIcon
+} from '@/components/ui/chevrons-left-right';
+import {
+    ChevronsRightLeftIcon
+} from '@/components/ui/chevrons-right-left';
 import {
     Avatar,
     AvatarFallback,
@@ -73,7 +79,7 @@ export default function DashboardLayout({
                                     onClick={() => setIsSidebarOpen(false)}
                                 >
                                     <item.icon className="size-4" />
-                                    {isSidebarOpen ? item.label : ''}
+                                    {isSidebarOpen && item.label}
                                 </Button>
                             </Link>
                         ))}
@@ -84,12 +90,7 @@ export default function DashboardLayout({
                     <Feedback />
                     <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                         <DropdownMenuTrigger asChild>
-                            <div className={`flex space-x-2 items-center py-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800`}>
-                                {
-                                    isSidebarOpen && (<p className="text-sm font-medium">
-                                        {user.name ? user.name : user.email}
-                                    </p>)
-                                }
+                            <div className={`flex space-x-2 items-center p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800`}>
                                 <Avatar className="cursor-pointer size-8">
                                     <AvatarImage src={user.image || ''} alt={user.name || ''} />
                                     <AvatarFallback>
@@ -126,10 +127,18 @@ export default function DashboardLayout({
                             </form>
                         </DropdownMenuContent>
                     </DropdownMenu>
+                    <Button
+                        variant={'ghost'}
+                        className={`p-2 justify-start`}
+                        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    >
+                        {isSidebarOpen ?
+                            <ChevronsRightLeftIcon />
+                            : <ChevronsLeftRightIcon />}
+                    </Button>
                 </SidebarFooter>
             </Sidebar>
             <main className="flex-1 overflow-y-auto p-0 lg:p-4">
-                <SidebarTrigger />
                 {children}
             </main>
         </SidebarProvider>
