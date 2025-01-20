@@ -16,7 +16,7 @@ import { signOut } from '@/app/(login)/actions';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/big/logo';
 import DarkModeToggle from './darkModeToggler';
-import Image from 'next/image';
+import Feedback from '@/components/feedback/feedback';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,6 +33,7 @@ export default function Header() {
         <header className="border-b border-gray-200 dark:border-gray-700">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
                 <Logo title />
+                <Feedback />
                 <div className="flex items-center space-x-4">
                     <DarkModeToggle />
                     {user ? (

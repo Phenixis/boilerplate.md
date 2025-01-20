@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import { ValuesProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
-import Feedback from '@/components/feedback/feedback';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
@@ -37,7 +36,6 @@ export default function RootLayout({
             <body>
                 <ValuesProvider userPromise={userPromise} appName={appName} companyName={companyName}>
                     {children}
-                    <Feedback />
                 </ValuesProvider>
                 <Toaster />
             </body>
