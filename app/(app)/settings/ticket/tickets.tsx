@@ -2,20 +2,14 @@ import { getFeedbacks } from "@/components/feedback/actions";
 import { getUser } from "@/lib/db/queries";
 import TicketsDisplay from "./ticketsDisplay";
 
-export default async function tickets() {
+export default async function Tickets() {
     const user = await getUser();
     if (!user) {
-        return { error: 'User not found' };
+        return <div>User not found</div>;
     }
 
     const feedbacks = await getFeedbacks(user?.id || '', user?.email || '');
-    
-    if (!Array.isArray(feedbacks)) {
-        return (
-            <div>{feedbacks.error}</div>
-        )
-    }
-    
+
     return (
         <TicketsDisplay tickets={feedbacks} />
     )

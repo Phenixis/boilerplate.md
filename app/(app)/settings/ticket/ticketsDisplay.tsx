@@ -1,6 +1,6 @@
 import { Ticket } from "@/lib/db/schema";
 
-export default function TicketsDisplay(tickets?: Ticket[]) {
+export default function TicketsDisplay(tickets?: Ticket[] | { error: string }) {
     return (
         <div>
             {tickets ?
