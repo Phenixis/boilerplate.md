@@ -153,6 +153,31 @@ export const ABTestResult = pgTable('ab_test_result', {
   endingTime: timestamp('ending_time').notNull(),
 })
 
+export const ticket = pgTable('ticket', {
+  id: serial('id').primaryKey(),
+  openedBy: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  status: varchar('status', { length: 20 }).notNull().default('open'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+  closedAt: timestamp('closed_at'),
+});
+
+export const ticketComment = pgTable('ticket_comment', {
+  id: serial('id').primaryKey(),
+  ticketId: integer('ticket_id')
+    .notNull()
+    .references(() => ticket.id, { onDelete: "cascade" }),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  comment: text('comment').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+});
+
 export const teamsRelations = relations(teams, ({ many }) => ({
   teamMembers: many(teamMembers),
   activityLogs: many(activityLogs),
@@ -166,6 +191,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   authenticators: many(authenticators),
   accounts: many(accounts),
   sessions: many(sessions),
+  ticket: many(ticket),
 }));
 
 export const invitationsRelations = relations(invitations, ({ one }) => ({
@@ -233,6 +259,21 @@ export const ABTestResultRelations = relations(ABTestResult, ({ one }) => ({
   }),
 }));
 
+export const TicketRelations = relations(ticket, ({ many }) => ({
+  comments: many(ticketComment)
+}));
+
+export const TicketCommentRelations = relations(ticketComment, ({ one }) => ({
+  ticket: one(ticket, {
+    fields: [ticketComment.ticketId],
+    references: [ticket.id],
+  }),
+  user: one(users, {
+    fields: [ticketComment.userId],
+    references: [users.id],
+  }),
+}));
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type Team = typeof teams.$inferSelect;
@@ -252,6 +293,10 @@ export type ABTest = typeof ABTest.$inferSelect;
 export type NewABTest = typeof ABTest.$inferInsert;
 export type ABTestResult = typeof ABTestResult.$inferSelect;
 export type NewABTestResult = typeof ABTestResult.$inferInsert;
+export type Ticket = typeof ticket.$inferSelect;
+export type NewTicket = typeof ticket.$inferInsert;
+export type TicketComment = typeof ticketComment.$inferSelect;
+export type NewTicketComment = typeof ticketComment.$inferInsert;
 
 export enum ActivityType {
   SIGN_UP = 'SIGN_UP',
@@ -264,4 +309,11 @@ export enum ActivityType {
   REMOVE_TEAM_MEMBER = 'REMOVE_TEAM_MEMBER',
   INVITE_TEAM_MEMBER = 'INVITE_TEAM_MEMBER',
   ACCEPT_INVITATION = 'ACCEPT_INVITATION',
+}
+
+export enum TicketStatus {
+  OPEN = 'open',
+  REVIEWING = 'reviewing',
+  IN_PROGRESS = 'in_progress',
+  CLOSED = 'closed',
 }
