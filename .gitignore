@@ -41,3 +41,4 @@ postgres_data/
 
 # Migrations
 lib/db/migrations/
+lib/db/migrations/meta/
