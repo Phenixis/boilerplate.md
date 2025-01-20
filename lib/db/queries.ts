@@ -3,31 +3,48 @@ import { db } from './drizzle';
 import { activityLogs, teamMembers, teams, users } from './schema';
 import { getSession } from '@/lib/auth/session';
 
-export async function getUser() {
-  const session = await getSession();
+export async function getUser(id?: string) {
+  if (!id) {
+    const session = await getSession();
 
-  if (!session) {
-    return null;
+    if (!session) {
+      return null;
+    }
+
+    if (new Date(session.expires) < new Date()) {
+      return null;
+    }
+
+    const user = await db
+      .select()
+      .from(users)
+      .where(and(
+        (session.user.id ? eq(users.id, session.user?.id) : eq(users.email, session.user?.email)),
+        isNull(users.deletedAt))
+      )
+      .limit(1);
+
+    if (user.length === 0) {
+      return null;
+    }
+
+    return user[0];
+  } else {
+    const user = await db
+      .select()
+      .from(users)
+      .where(and(
+        eq(users.id, id),
+        isNull(users.deletedAt))
+      )
+      .limit(1);
+
+    if (user.length === 0) {
+      return null;
+    }
+
+    return user[0];
   }
-
-  if (new Date(session.expires) < new Date()) {
-    return null;
-  }
-
-  const user = await db
-    .select()
-    .from(users)
-    .where(and(
-      (session.user.id ? eq(users.id, session.user?.id) : eq(users.email, session.user?.email)),
-      isNull(users.deletedAt))
-    )
-    .limit(1);
-
-  if (user.length === 0) {
-    return null;
-  }
-
-  return user[0];
 }
 
 export async function getTeamByStripeCustomerId(customerId: string) {

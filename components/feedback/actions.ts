@@ -2,7 +2,7 @@
 
 import { desc, and, eq, isNull, or, isNotNull, count } from 'drizzle-orm';
 import { db } from '@/lib/db/drizzle';
-import { ticket, Ticket, NewTicket, TicketStatus } from '@/lib/db/schema';
+import { ticket, ticketComment, Ticket, NewTicket, TicketStatus } from '@/lib/db/schema';
 import { ActionState } from '@/lib/auth/middleware';
 
 export async function sendFeedback(state: ActionState, data: FormData) {
@@ -32,4 +32,23 @@ export async function getFeedbacks(userId?: string, userEmail?: string) {
         .orderBy(desc(ticket.createdAt));
 
     return feedbacks;
+}
+
+export async function getTicket(id: number) {
+    const feedback = await db
+        .select()
+        .from(ticket)
+        .where(eq(ticket.id, id));
+
+    return feedback[0];
+}
+
+export async function getComments(id: number) {
+    const comments = await db
+        .select()
+        .from(ticketComment)
+        .where(eq(ticketComment.ticketId, id))
+        .orderBy(desc(ticketComment.createdAt));
+
+    return comments;
 }
