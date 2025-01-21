@@ -7,7 +7,7 @@ export default async function NotFound() {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="max-w-md space-y-8 p-4 text-center">
+      <div className="flex flex-col items-center justify-center max-w-md space-y-8 p-4 text-center">
         <Logo />
         <h1 className="text-4xl font-bold text-gray-900 dark:text-slate-100 tracking-tight">
           Page Not Found
