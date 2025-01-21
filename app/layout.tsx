@@ -10,7 +10,7 @@ export const metadata: Metadata = {
         template: '%s | ' + (process.env.APP_NAME || 'NextJs Boilerplate'),
         default: process.env.APP_NAME || 'NextJs Boilerplate',
     },
-    description: 'Get started quickly with Next.js, Postgres, and Stripe.',
+    description: 'Forget about the fluff, Focus on your genius. Start your brilliant idea with all the fluff already done and build your next startup in days.',
 };
 
 export const viewport: Viewport = {
