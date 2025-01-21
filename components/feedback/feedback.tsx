@@ -23,7 +23,7 @@ import { Textarea } from "../ui/textarea";
 export default function Feedback() {
     const user = useValues().user;
     const [isOpen, setIsOpen] = useState(false);
-    const [title, setTitle] = useState("🐞Bugs + ❓Suggestion");
+    const [title, setTitle] = useState("🐞Bugs/❓Suggestion");
     const [feedbackState, feedbackAction, isFeedbackPending] = useActionState<ActionState, FormData>(
         async (state, formData) => {
             const result = await sendFeedback(state, formData);
@@ -37,7 +37,7 @@ export default function Feedback() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setTitle("🐞 + ❓")
+            setTitle("🐞/❓")
         }, 3000);
 
         return () => clearTimeout(timer);
