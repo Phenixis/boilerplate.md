@@ -45,7 +45,7 @@ export default function Page() {
         <div className="min-h-[100dvh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <Logo />
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
                     Log in
                 </h2>
             </div>
@@ -95,7 +95,7 @@ export default function Page() {
                                 autoComplete="email"
                                 required
                                 maxLength={50}
-                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  dark:text-gray-100 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
                                 placeholder="Enter your email"
                                 defaultValue={email}
                                 onChange={() => {
@@ -126,7 +126,7 @@ export default function Page() {
                                 required={emailValidated > 0}
                                 minLength={8}
                                 maxLength={100}
-                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
                                 placeholder="Enter your password"
                             />
                         </div>
@@ -160,7 +160,7 @@ export default function Page() {
                     <div className="flex items-center justify-center">
                         <Link
                             href={`/sign-up`}
-                            className="text-sm text-gray-600 hover:text-gray-900 hover:underline"
+                            className="text-sm text-gray-600 hover:text-gray-900 hover:dark:text-gray-100 hover:underline"
                         >
                             Back to our old login flow
                         </Link>

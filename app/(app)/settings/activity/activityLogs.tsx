@@ -100,7 +100,7 @@ export default async function ActivityLogs() {
         ) : (
             <div className="flex flex-col items-center justify-center text-center py-12">
                 <AlertCircle className="h-12 w-12 text-brand-primary mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                     No activity yet
                 </h3>
                 <p className="text-sm text-gray-500 max-w-sm">

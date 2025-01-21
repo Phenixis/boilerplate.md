@@ -51,7 +51,7 @@ export default function SecuritySettings() {
 
   return (
     <section className="flex-1 p-4 lg:p-8">
-      <h1 className="text-lg lg:text-2xl font-medium bold text-gray-900 mb-6">
+      <h1 className="text-lg lg:text-2xl font-medium bold text-gray-900 dark:text-gray-100 mb-6">
         Security
       </h1>
       <Card className="mb-8">

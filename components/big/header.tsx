@@ -47,7 +47,7 @@ export default function Header({
                         <>
                             <Link
                                 href="/pricing"
-                                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                                className="text-sm font-medium text-gray-700 hover:text-gray-900 hover:dark:text-gray-500"
                             >
                                 Pricing
                             </Link>

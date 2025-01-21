@@ -66,7 +66,7 @@ export default function Feedback() {
                 <DialogHeader>
                     <DialogTitle>Send feedback</DialogTitle>
                     <DialogDescription>
-                        Please let me know how I can improve this app. You can also contact me on <a href="https://twitter.com/maxime_duhamel_" target="_blank" className="underline hover:text-gray-900">𝕏</a>.
+                        Please let me know how I can improve this app. You can also contact me on <a href="https://twitter.com/maxime_duhamel_" target="_blank" className="underline hover:text-gray-900 hover:dark:text-gray-500">𝕏</a>.
                     </DialogDescription>
                 </DialogHeader>
                 <form action={feedbackAction} className="gap-4 flex flex-col">

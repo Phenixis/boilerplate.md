@@ -68,7 +68,7 @@ export default function Footer({
                                         </a>
                                     </p>
                                 ) : (
-                                    <p key={link.href} className="text-gray-700 hover:text-gray-900 hover:underline">
+                                    <p key={link.href} className="text-gray-700 hover:text-gray-900 dark:text-gray-100 hover:underline">
                                         <Link href={link.href}>
                                             {link.title}
                                         </Link>
