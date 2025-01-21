@@ -14,16 +14,14 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { useActionState } from 'react';
 import { inviteTeamMember } from '@/app/(login)/actions';
-import { useValues } from '@/lib/auth';
 
 type ActionState = {
   error?: string;
   success?: string;
 };
 
-export function InviteTeamMember() {
-  const user = useValues().user;
-  const isOwner = user?.role === 'owner';
+export function InviteTeamMember({userRole} : {userRole: string}) {
+  const isOwner = userRole === 'owner';''
   const [inviteState, inviteAction, isInvitePending] = useActionState<
     ActionState,
     FormData

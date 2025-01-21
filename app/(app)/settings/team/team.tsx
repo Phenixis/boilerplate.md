@@ -8,6 +8,7 @@ import { useActionState } from 'react';
 import { TeamDataWithMembers, User } from '@/lib/db/schema';
 import { removeTeamMember } from '@/app/(login)/actions';
 import { InviteTeamMember } from '../invite-team';
+import { useValues } from '@/lib/auth';
 
 type ActionState = {
   error?: string;
@@ -15,6 +16,7 @@ type ActionState = {
 };
 
 export function TeamSettings({ teamData }: { teamData: TeamDataWithMembers }) {
+  const user = useValues().user;
   const [removeState, removeAction, isRemovePending] = useActionState<
     ActionState,
     FormData
@@ -105,7 +107,9 @@ export function TeamSettings({ teamData }: { teamData: TeamDataWithMembers }) {
           )}
         </CardContent>
       </Card>
-      <InviteTeamMember />
+      <InviteTeamMember userRole={
+        teamData.teamMembers.find(m => m.user.id === user?.id )?.role || 'member'
+      } />
     </section>
   );
 }
