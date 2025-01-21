@@ -43,7 +43,7 @@ export default function DashboardLayout({
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMenuTelOpen, setIsMenuTelOpen] = useState(false);
     const pathname = usePathname();
-    const { open, toggleSidebar } = useSidebar();
+    const { open, setOpen, toggleSidebar } = useSidebar();
 
     const dashboardNavItems = [
         { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -88,7 +88,7 @@ export default function DashboardLayout({
                                                             variant={pathname === subItem.href ? 'secondary' : 'ghost'}
                                                             className={`p-2 mt-1 w-full justify-start ${pathname === subItem.href ? 'bg-gray-100' : ''
                                                                 }`}
-                                                            onClick={toggleSidebar}
+                                                            onClick={() => setOpen(false)}
                                                         >
                                                             <subItem.icon className="size-4" />
                                                             {open && subItem.label}
