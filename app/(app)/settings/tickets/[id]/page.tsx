@@ -20,10 +20,12 @@ export default async function Page({
         redirect('/login');
     }
 
-    if (ticket.openedBy !== user.id && ticket.openerEmail !== user.email) {
+    if ((ticket.openedBy !== user.id && ticket.openerEmail !== user.email) && user.role !== 'admin') {
         redirect('/settings/ticket');
     }
 
+    // TODO: add the option to reply to a ticket
+    // TODO: add the option to change the status of a ticket
 
     return (
         <section className="flex-1 p-4 lg:p-8">

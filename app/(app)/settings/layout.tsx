@@ -54,7 +54,7 @@ export default function DashboardLayout({
         { href: '/settings/team', icon: Users, label: 'Team' },
         { href: '/settings/activity', icon: Activity, label: 'Activity' },
         { href: '/settings/security', icon: Shield, label: 'Security' },
-        { href: '/settings/ticket', icon: Ticket, label: 'Ticket' },
+        { href: '/settings/tickets', icon: Ticket, label: 'Tickets' },
     ];
 
     const navItems = {

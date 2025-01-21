@@ -17,7 +17,7 @@ export async function sendFeedback(state: ActionState, data: FormData) {
 
     const result = await db.insert(ticket).values(newTicket);
 
-    return { success: 'Feedback sent successfully' };
+    return { success: 'Feedback sent successfully. You can now find it in the Ticket section, in your settings.' };
 }
 
 export async function getFeedbacks(userId?: string, userEmail?: string) {
