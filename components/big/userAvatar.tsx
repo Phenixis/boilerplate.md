@@ -12,9 +12,10 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Link, Home, Settings, LogOut } from "lucide-react";
+import { Home, Settings, LogOut } from "lucide-react";
 import { signOut } from '@/app/(login)/actions';
 import { User } from '@/lib/db/schema';
+import Link from 'next/link';
 
 export default function UserAvatar({
     isMenuOpen,
