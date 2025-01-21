@@ -14,7 +14,7 @@ type ActionState = {
   success?: string;
 };
 
-export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
+export function TeamSettings({ teamData }: { teamData: TeamDataWithMembers }) {
   const [removeState, removeAction, isRemovePending] = useActionState<
     ActionState,
     FormData
@@ -26,7 +26,7 @@ export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
 
   return (
     <section className="flex-1 p-4 lg:p-8">
-      <h1 className="text-lg lg:text-2xl font-medium mb-6">Team Settings</h1>
+      <h1 className="text-lg lg:text-2xl font-medium mb-6">Team</h1>
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Team Subscription</CardTitle>
