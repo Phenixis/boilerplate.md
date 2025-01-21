@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import Logo from '@/components/big/logo';
 import DarkModeToggle from './darkModeToggler';
 import Feedback from '@/components/feedback/feedback';
+import UserAvatar from './userAvatar';
 
 export default function Header({
     fullWidth
@@ -41,43 +42,7 @@ export default function Header({
                 <div className="flex items-center space-x-4">
                     <DarkModeToggle />
                     {user ? (
-                        <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-                            <DropdownMenuTrigger asChild>
-                                <Avatar className="cursor-pointer size-9">
-                                    <AvatarImage src={user.image || ''} alt={user.name || ''} />
-                                    <AvatarFallback>
-                                        {
-                                            (user.name ? user.name : user.email)
-                                                .split(' ')
-                                                .map((n) => n[0])
-                                                .join('')
-                                        }
-                                    </AvatarFallback>
-                                </Avatar>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="flex flex-col gap-1">
-                                <DropdownMenuItem className="cursor-pointer">
-                                    <Link href="/dashboard" className="flex w-full items-center">
-                                        <Home className="mr-2 h-4 w-4" />
-                                        <span>Dashboard</span>
-                                    </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="cursor-pointer">
-                                    <Link href="/settings" className="flex w-full items-center">
-                                        <Settings className="mr-2 h-4 w-4" />
-                                        <span>Settings</span>
-                                    </Link>
-                                </DropdownMenuItem>
-                                <form action={handleSignOut} className="w-full">
-                                    <button type="submit" className="flex w-full">
-                                        <DropdownMenuItem className="w-full flex-1 cursor-pointer">
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            <span>Sign out</span>
-                                        </DropdownMenuItem>
-                                    </button>
-                                </form>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <UserAvatar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} user={user} setUser={setUser} />
                     ) : (
                         <>
                             <Link
