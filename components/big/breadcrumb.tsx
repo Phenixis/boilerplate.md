@@ -1,7 +1,11 @@
+"use client";
 
+import { usePathname } from 'next/navigation';
 import { Breadcrumb as Bc, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 
-export default function Breadcrumb({pathname} : {pathname:string}) {
+export default function Breadcrumb() {
+    const pathname = usePathname();
+    
     return (
         <Bc className="px-4 lg:px-8">
             <BreadcrumbList>
