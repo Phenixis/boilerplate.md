@@ -7,6 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Lock, Trash2, Loader2 } from 'lucide-react';
 import { startTransition, useActionState } from 'react';
 import { updatePassword, deleteAccount } from '@/app/(login)/actions';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Security Settings',
+};
 
 type ActionState = {
   error?: string;

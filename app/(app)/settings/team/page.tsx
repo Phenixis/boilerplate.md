@@ -4,7 +4,7 @@ import { getTeamForUser, getUser } from '@/lib/db/queries';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Settings',
+  title: 'Team Settings',
 };
 
 export default async function SettingsPage() {

@@ -18,7 +18,11 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { UploadIcon } from '@/components/ui/upload';
+import type { Metadata } from 'next';
 
+export const metadata: Metadata = {
+  title: 'General Settings',
+};
 type ActionState = {
     error?: string;
     success?: string;
