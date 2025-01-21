@@ -4,7 +4,7 @@ export default function AvatarsDisplay({ images, numberUsers }: { images?: { nam
     const skeleton = (images === undefined && numberUsers === undefined);
 
     return (
-        <div className="flex justify-center lg:justify-start items-center space-x-2">
+        <div className="flex justify-start sm:justify-center lg:justify-start items-center space-x-2">
             <div className={`flex -space-x-4 ${skeleton ? 'animate-pulse' : ''}`}>
                 {
                     skeleton ?
