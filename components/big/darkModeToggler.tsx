@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import { Button } from '../ui/button';
 
 export default function DarkModeToggle() {
     const [isDarkMode, setIsDarkMode] = useState(false)
@@ -16,15 +17,17 @@ export default function DarkModeToggle() {
     }
 
     return (
-        <button
+        <Button
+            variant={"ghost"}
+            size={"icon"}
             onClick={toggleDarkMode}
-            className="-rotate-[23deg] hover:rotate-[23deg] duration-300 flex align-middle relative py-1 px-2 m-1 transition-all text-neutral-800 hover:text-neutral-500 dark:text-neutral-200 dark:hover:text-neutral-500"
+            className="group/DarkMode"
         >
             {isDarkMode ? (
-                <Moon />
+                <Moon className="group-hover/DarkMode:rotate-[30deg] duration-300" />
             ) : (
-                <Sun />
+                <Sun className="group-hover/DarkMode:rotate-[30deg] duration-300" />
             )}
-        </button>
+        </Button>
     )
 }
