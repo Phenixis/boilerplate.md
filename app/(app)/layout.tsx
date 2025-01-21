@@ -1,3 +1,5 @@
+import { SidebarProvider } from '@/components/ui/sidebar';
+
 export default function Layout({
     children,
 }: {
@@ -5,7 +7,9 @@ export default function Layout({
 }) {
     return (
         <main className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col justify-between">
-            {children}
+            <SidebarProvider>
+                {children}
+            </SidebarProvider>
         </main>
     )
 }
