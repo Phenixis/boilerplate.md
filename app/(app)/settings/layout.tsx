@@ -41,6 +41,7 @@ export default function DashboardLayout({
     }
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuTelOpen, setIsMenuTelOpen] = useState(false);
     const pathname = usePathname();
     const { open, toggleSidebar } = useSidebar();
 
@@ -130,7 +131,7 @@ export default function DashboardLayout({
                     <div className="flex items-center">
                         <DarkModeToggle />
                         <Feedback />
-                        <UserAvatar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} user={user} setUser={setUser} />
+                        <UserAvatar isMenuOpen={isMenuTelOpen} setIsMenuOpen={setIsMenuTelOpen} user={user} setUser={setUser} />
                     </div>
                 </header>
                 <Breadcrumb pathname={pathname} />
