@@ -24,9 +24,9 @@ export default function DarkModeToggle() {
             className="group/DarkMode"
         >
             {isDarkMode ? (
-                <Moon className="group-hover/DarkMode:rotate-[30deg] duration-300" />
+                <Moon className="group-hover/DarkMode:rotate-[30deg] duration-300 size-4 lg:size-6" />
             ) : (
-                <Sun className="group-hover/DarkMode:rotate-[30deg] duration-300" />
+                <Sun className="group-hover/DarkMode:rotate-[30deg] duration-300 size-4 lg:size-6" />
             )}
         </Button>
     )
