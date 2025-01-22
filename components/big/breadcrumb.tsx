@@ -13,7 +13,7 @@ export default function Breadcrumb() {
                     pathname.split('/').map((path, index) => {
                         if (path === '') {
                             return (
-                                <BreadcrumbItem>
+                                <BreadcrumbItem key={index}>
                                     <BreadcrumbLink href="/">Home</BreadcrumbLink>
                                 </BreadcrumbItem>
                             );
