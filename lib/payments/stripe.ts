@@ -198,8 +198,6 @@ export async function getStripeProductsAndPrices() {
   const products = await getStripeProducts();
   const prices = await getStripePrices();
 
-  throw new Error('Not implemented');
-
   return products.map(product => {
       return {
           ...product,
