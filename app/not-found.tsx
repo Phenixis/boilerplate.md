@@ -2,9 +2,15 @@ import Link from 'next/link';
 import Logo from '@/components/big/logo';
 import { getUser } from '@/lib/db/queries';
 
-export const dynamic = 'force-dynamic'
+export default function NotFound2() {
+  return (
+    <div>
+      Not found
+    </div>
+  )
+}
 
-export default async function NotFound() {
+export async function NotFound() {
   const user = await getUser();
 
   return (
