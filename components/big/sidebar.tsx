@@ -4,7 +4,7 @@ import { usePathname, redirect } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Users, Settings, Shield, Activity, Ticket, Slash, Menu, ChevronDown, SettingsIcon, Home, LayoutDashboard } from 'lucide-react';
+import { Users, Settings, Shield, Activity, Ticket, Slash, Menu, ChevronDown, SettingsIcon, Home, LayoutDashboard, DollarSign } from 'lucide-react';
 import { useValues } from '@/lib/auth';
 import Feedback from '@/components/feedback/feedback';
 import DarkModeToggle from '@/components/big/darkModeToggler';
@@ -80,9 +80,19 @@ export function Sidebar() {
         { href: '/settings/tickets', icon: Ticket, label: 'Tickets' },
     ];
 
-    const navItems = {
+    const adminNavItems = [
+        { href: '/settings/admin', icon: SettingsIcon, label: 'General' },
+        { href: '/settings/admin/pricing', icon: DollarSign, label: 'Pricing' },
+        { href: '/settings/admin/tickets', icon: Ticket, label: 'Tickets' },
+    ]
+
+    const navItems : Record<string, { href: string, icon: any, label: string }[]> = {
         'Dashboard': dashboardNavItems,
         'Settings': settingsNavItems,
+    }
+
+    if (user.role === 'admin') {
+        navItems['Admin'] = adminNavItems;
     }
 
     return (
