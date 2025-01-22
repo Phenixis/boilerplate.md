@@ -143,11 +143,10 @@ export async function handleSubscriptionChange(
   }
 }
 
-export async function getStripePrices() {
+export async function getStripePrices(active?: boolean) {
   const prices = await stripe.prices.list({
     expand: ['data.product'],
-    active: true,
-    type: 'recurring',
+    active: active ?? true,
   });
 
   return prices.data.map((price) => ({
@@ -161,9 +160,9 @@ export async function getStripePrices() {
   }));
 }
 
-export async function getStripeProducts() {
+export async function getStripeProducts(active?: boolean) {
   const products = await stripe.products.list({
-    active: true,
+    active: active ?? true,
     expand: ['data.default_price'],
   });
 
@@ -171,9 +170,38 @@ export async function getStripeProducts() {
     id: product.id,
     name: product.name,
     description: product.description,
+    active: product.active,
     defaultPriceId:
       typeof product.default_price === 'string'
         ? product.default_price
         : product.default_price?.id,
   }));
+}
+
+export type StripeProductWithPrices = {
+  id: string;
+  name: string;
+  description: string | null;
+  active: boolean;
+  defaultPriceId: string | undefined;
+  prices: {
+    id: string;
+    productId: string;
+    unitAmount: number | null;
+    currency: string;
+    interval: Stripe.Price.Recurring.Interval | undefined;
+    trialPeriodDays: number | null | undefined;
+  }[];
+};
+
+export async function getStripeProductsAndPrices() {
+  const products = await getStripeProducts();
+  const prices = await getStripePrices();
+
+  return products.map(product => {
+      return {
+          ...product,
+          prices: prices.filter(price => price.productId === product.id)
+      } as StripeProductWithPrices;
+  });
 }
