@@ -33,7 +33,7 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center md:mx-auto">
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 tracking-tight sm:text-4xl md:text-5xl">
-                            Start your brilliant idea,&nbsp;<strong className="text-brand-primary">with all the fluff already done</strong>
+                            Start your brilliant idea,&nbsp;<strong className="text-primary">with all the fluff already done</strong>
                         </h1>
                         {/* <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                             Start your brilliant idea with all the fluff already done and build your next startup in days.
@@ -62,7 +62,7 @@ export default function HomePage() {
                             features.map((feature, index) => (
                                 <div key={index} className={`relative group/Feature ${feature.colSpan ? 'col-span-' + feature.colSpan : 'col-span-1'} ${feature.rowSpan ? 'row-span-' + feature.rowSpan : 'row-span-1'}`}>
                                     <div className="h-full w-full flex flex-col justify-between items-start bg-gray-50 dark:bg-gray-900 p-4 rounded-md ">
-                                        <div className="flex items-center justify-center h-12 px-2 w-fit rounded-md bg-brand-primary text-white">
+                                        <div className="flex items-center justify-center h-12 px-2 w-fit rounded-md bg-primary text-white">
                                             <feature.icon className="size-6 mr-2 group-hover/Feature:size-8 duration-100" />
                                             <h3 className="text-lg font-medium group-hover/Feature:text-xl duration-100">{feature.title}</h3>
                                         </div>

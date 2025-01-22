@@ -1,6 +1,7 @@
 import { StripeProductWithPrices } from "@/lib/payments/stripe"
 import { Card, CardContent, CardHeader, CardFooter, CardTitle } from '@/components/ui/card';
 import Product from "./product";
+import { Button } from '@/components/ui/button';
 
 export default function ProductsDisplay({
     products
@@ -11,7 +12,10 @@ export default function ProductsDisplay({
         (
             <Card>
                 <CardHeader>
-                    <CardTitle>Products</CardTitle>
+                    <CardTitle className="flex justify-between items-center">
+                        Products
+                        <Button>Ajouter un produit</Button>
+                    </CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-3 gap-8">
                     {

@@ -95,7 +95,7 @@ export default function Page() {
                                 autoComplete="email"
                                 required
                                 maxLength={50}
-                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  dark:text-gray-100 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                                 placeholder="Enter your email"
                                 defaultValue={email}
                                 onChange={() => {
@@ -126,7 +126,7 @@ export default function Page() {
                                 required={emailValidated > 0}
                                 minLength={8}
                                 maxLength={100}
-                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-brand-primary focus:border-brand-primary focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                                 placeholder="Enter your password"
                             />
                         </div>
@@ -142,7 +142,7 @@ export default function Page() {
                     <div className="space-y-2 sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:space-x-2">
                         <Button
                             type="submit"
-                            className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-brand-primary/90 hover:bg-brand-primary/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary"
+                            className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-primary/90 hover:bg-primary/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                             disabled={pending || emailValidated < 0}
                         >
                             {pending ? (

@@ -77,7 +77,7 @@ export default function Step2Page() {
                             )}
                             <Button
                                 type="submit"
-                                className="bg-brand-primary mx-auto hover:bg-brand-primary/90 text-white"
+                                className="bg-primary mx-auto hover:bg-primary/90 text-white"
                                 disabled={isPending}
                             >
                                 {isPending ? (

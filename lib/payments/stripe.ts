@@ -155,8 +155,8 @@ export async function getStripePrices(active?: boolean) {
       typeof price.product === 'string' ? price.product : price.product.id,
     unitAmount: price.unit_amount,
     currency: price.currency,
-    interval: price.recurring?.interval,
-    trialPeriodDays: price.recurring?.trial_period_days,
+    interval: price.recurring?.interval || "one-time",
+    trialPeriodDays: price.recurring?.trial_period_days || 0,
   }));
 }
 

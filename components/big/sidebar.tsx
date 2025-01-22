@@ -118,8 +118,7 @@ export function Sidebar() {
                                                 <Link key={subItem.href} href={subItem.href} passHref>
                                                     <Button
                                                         variant={pathname === subItem.href ? 'secondary' : 'ghost'}
-                                                        className={`p-2 mt-1 w-full justify-start ${pathname === subItem.href ? 'bg-gray-100' : ''
-                                                            }`}
+                                                        className={`p-2 mt-1 w-full justify-start`}
                                                         onClick={() => setOpen(false)}
                                                     >
                                                         <subItem.icon className="size-4" />

@@ -71,7 +71,7 @@ export function InviteTeamMember({userRole} : {userRole: string}) {
           )}
           <Button
             type="submit"
-            className="bg-brand-primary hover:bg-brand-primary/90 text-white"
+            className="bg-primary hover:bg-primary/90 text-white"
             disabled={isInvitePending || !isOwner}
           >
             {isInvitePending ? (

@@ -23,9 +23,7 @@ export default function Product({
         <Card>
             <CardHeader>
                 <CardTitle className="flex justify-between items-center">
-                    <h2>
-                        {product.name}
-                    </h2>
+                    {product.name}
                     {product.active ? (<Badge variant="outline">Active</Badge>) : (<Badge variant="outline">Inactive</Badge>)}
                 </CardTitle>
             </CardHeader>
@@ -61,7 +59,7 @@ export default function Product({
                 </Table>
             </CardContent>
             <CardFooter>
-                <Button>Add Price</Button>
+                <Button variant="outline">Add Price</Button>
             </CardFooter>
         </Card>
     )
