@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import Tickets from './tickets';
-import TicketsDisplay from './ticketsDisplay';
+import Tickets from '@/components/big/tickets';
+import TicketsDisplay from '@/components/big/ticketsDisplay';
 
 export const metadata: Metadata = {
     title: 'Tickets',

@@ -20,7 +20,7 @@ export default async function Page({
         redirect('/login');
     }
 
-    if ((ticket.openedBy !== user.id && ticket.openerEmail !== user.email) && user.role !== 'admin') {
+    if ((ticket.openedBy !== user.id && ticket.openerEmail !== user.email)) {
         redirect('/settings/ticket');
     }
 

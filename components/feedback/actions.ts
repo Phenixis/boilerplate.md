@@ -34,6 +34,15 @@ export async function getFeedbacks(userId?: string, userEmail?: string) {
     return feedbacks;
 }
 
+export async function getAllFeedbacks() {
+    const feedbacks = await db
+        .select()
+        .from(ticket)
+        .orderBy(desc(ticket.createdAt));
+
+    return feedbacks;
+}
+
 export async function getTicket(id: number) {
     const feedback = await db
         .select()
