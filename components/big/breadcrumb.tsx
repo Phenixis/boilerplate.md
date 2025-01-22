@@ -6,8 +6,6 @@ import { Breadcrumb as Bc, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, Bread
 export default function Breadcrumb() {
     const pathname = usePathname();
 
-    console.log(pathname.split('/'));
-
     return (
         <Bc className="px-4 lg:px-8">
             <BreadcrumbList>
