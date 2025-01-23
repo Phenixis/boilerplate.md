@@ -1,4 +1,10 @@
 import Products from './products';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Pricing',
+    description: 'Manage your product pricing',
+};
 
 export default function PricingPage() {
     return (
