@@ -41,7 +41,7 @@
     "jose": "^5.9.6",
     "lucide-react": "^0.454.0",
     "motion": "^11.18.2",
-    "next": "15.2.0-canary.16",
+    "next": "15.2.0-canary.21",
     "next-auth": "5.0.0-beta.25",
     "postcss": "^8.5.1",
     "postgres": "^3.4.5",
