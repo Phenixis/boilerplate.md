@@ -46,8 +46,8 @@ export default async function Page({
                 </CardContent>
             </Card>
             {
-                comments.map((comment) => (
-                    <>
+                comments.map((comment, index) => (
+                    <div key={index}>
                         <hr className="ml-4 my-6 w-12 rotate-90" />
                         <Card key={comment.id} className="mt-4">
                             <CardHeader>
@@ -61,7 +61,7 @@ export default async function Page({
                                 </p>
                             </CardContent>
                         </Card>
-                    </>
+                    </div>
                 ))
             }
         </section>
