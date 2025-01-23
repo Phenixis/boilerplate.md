@@ -96,6 +96,15 @@ export function Sidebar() {
         navItems['Admin'] = adminNavItems;
     }
 
+    let active = "/"
+    for (const navSection in navItems) {
+        for (const navItem of navItems[navSection]) {
+            if (pathname.includes(navItem.href) && navItem.href.length > active.length) {
+                active = navItem.href;
+            }
+        }
+    }
+
     return (
         <SidebarComponent collapsible='icon'>
             <SidebarContent className="gap-0">
@@ -118,7 +127,7 @@ export function Sidebar() {
                                             {item.map((subItem) => (
                                                 <Link key={subItem.href} href={subItem.href} passHref>
                                                     <Button
-                                                        variant={pathname === subItem.href ? 'secondary' : 'ghost'}
+                                                        variant={subItem.href === active ? 'secondary' : 'ghost'}
                                                         className={`p-2 mt-1 w-full justify-start`}
                                                         onClick={() => setOpen(false)}
                                                     >
