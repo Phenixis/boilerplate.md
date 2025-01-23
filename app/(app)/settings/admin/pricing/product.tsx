@@ -43,7 +43,7 @@ export default function Product({
                                 <TableRow key={price.id}>
                                     <TableCell>
                                         {
-                                            price.unitAmount ? `${(price.unitAmount / 100).toFixed(2)}€` : "Free"
+                                            price.unitAmount ? `${(price.unitAmount / 100).toFixed(2)} ${price.currency}` : "Free"
                                         }
                                     </TableCell>
                                     <TableCell>
