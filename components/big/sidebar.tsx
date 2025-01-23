@@ -91,6 +91,7 @@ export function Sidebar() {
         'Settings': settingsNavItems,
     }
 
+    // Add admin nav items if user is admin
     if (user.role === 'admin') {
         navItems['Admin'] = adminNavItems;
     }
