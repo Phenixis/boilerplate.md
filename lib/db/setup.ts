@@ -184,11 +184,19 @@ function generateAuthSecret(): string {
 }
 
 function getApplicationInfos(): Promise<string[]> {
-  console.log('Step 6: Filling application information');
+  console.log('Step 7: Filling application information');
   return Promise.all([
     question('Enter your application name: '),
     question('Enter your company name: '),
   ]);
+}
+
+function getResendAPIKey(): Promise<string[]> {
+  console.log('Step 6: Getting Resend API Key');
+  return Promise.all([
+    question('Enter your Resend API Key: '),
+    question('Enter your Resend API Endpoint: ')
+  ])
 }
 
 async function writeEnvFile(envVars: Record<string, string>) {
@@ -209,6 +217,7 @@ async function main() {
   const STRIPE_WEBHOOK_SECRET = await createStripeWebhook();
   const BASE_URL = 'http://localhost:3000';
   const AUTH_SECRET = generateAuthSecret();
+  const [RESEND_API_KEY, RESEND_API_ENDPOINT] = await getResendAPIKey();
   const [APP_NAME, COMPANY_NAME] = await getApplicationInfos();
 
   await writeEnvFile({
@@ -217,6 +226,8 @@ async function main() {
     STRIPE_WEBHOOK_SECRET,
     BASE_URL,
     AUTH_SECRET,
+    RESEND_API_KEY,
+    RESEND_API_ENDPOINT,
     APP_NAME,
     COMPANY_NAME,
   });
