@@ -178,9 +178,14 @@ async function createStripeWebhook(): Promise<string> {
   }
 }
 
-function generateAuthSecret(): string {
-  console.log('Step 5: Generating AUTH_SECRET...');
-  return crypto.randomBytes(32).toString('hex');
+function generateAuthSecret(): Promise<string[]> {
+  console.log('Step 5: Getting Authentification Secret');
+
+  return Promise.all([
+    crypto.randomBytes(32).toString('hex'),
+    question("Enter your Google ID: "),
+    question("Enter your Google Secret: "),
+  ])
 }
 
 function getApplicationInfos(): Promise<string[]> {
@@ -216,7 +221,7 @@ async function main() {
   const STRIPE_SECRET_KEY = await getStripeSecretKey();
   const STRIPE_WEBHOOK_SECRET = await createStripeWebhook();
   const BASE_URL = 'http://localhost:3000';
-  const AUTH_SECRET = generateAuthSecret();
+  const [AUTH_SECRET, AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET] = await generateAuthSecret();
   const [RESEND_API_KEY, RESEND_API_ENDPOINT] = await getResendAPIKey();
   const [APP_NAME, COMPANY_NAME] = await getApplicationInfos();
 
@@ -226,6 +231,8 @@ async function main() {
     STRIPE_WEBHOOK_SECRET,
     BASE_URL,
     AUTH_SECRET,
+    AUTH_GOOGLE_ID,
+    AUTH_GOOGLE_SECRET,
     RESEND_API_KEY,
     RESEND_API_ENDPOINT,
     APP_NAME,
