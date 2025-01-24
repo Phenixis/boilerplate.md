@@ -6,6 +6,27 @@
 - **Payments**: [Stripe](https://stripe.com/)
 - **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
 
+## Roadmap/To-do
+
+- [ ] Add a forgot password flow
+- [ ] Add the ability to create a password for an account created with a Provider
+- [ ] Add more Activity Logs
+- [ ] Add "type" to the feedback
+- [ ] Personnalize the pricing page based on the active Stripe products
+- [ ] Add the privacy policy
+- [ ] Stylize the Terms of Service page
+- [ ] Personnalize the landing page to : ($100M Offers, Alez Hormozi)
+    - Maximize the dream outcome (big claim/promise) and the perceived likelihood of achievement (show, prove, demonstrate)
+    - Minimize the time delay (make it instant) and effort & sacrifice (make it easy)
+
+### Admin
+- [ ] Add a product in the pricing section
+- [ ] Add a price in the pricing section
+- [ ] Add the ability to answer to a ticket
+- [ ] Add the ability to change the stauts of a ticket
+- [ ] Add the ability to filter/sort tickets
+
+
 ## Getting Started
 
 ```bash
@@ -83,3 +104,9 @@ In your Vercel project settings (or during deployment), add all the necessary en
 3. `STRIPE_WEBHOOK_SECRET`: Use the webhook secret from the production webhook you created in step 1.
 4. `POSTGRES_URL`: Set this to your production database URL.
 5. `AUTH_SECRET`: Set this to a random string. `openssl rand -base64 32` will generate one.
+6. `AUTH_GOOGLE_ID`: Set this to your Google OAuth client ID.
+7. `AUTH_GOOGLE_SECRET`: Set this to your Google OAuth client secret.
+8. `RESEND_API_KEY`: Set this to the API key for the Resend service.
+9. `RESEND_API_ENDPOINT`: Set this to a custom endpoint for the Resend Service.
+10. `APP_NAME`: Set this to the name of your application.
+11. `COMPANY_NAME`: Set this to the name of your company.
