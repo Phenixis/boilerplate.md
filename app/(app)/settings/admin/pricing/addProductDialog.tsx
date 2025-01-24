@@ -28,7 +28,6 @@ import { Loader2, Plus } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast"
 
 export default function AddProductDialog() {
-    const user = useValues().user;
     const [isOpen, setIsOpen] = useState(false);
     const { toast } = useToast();
     const [addProductState, addProductAction, isAddProductPending] = useActionState<ActionState, FormData>(
@@ -74,7 +73,7 @@ export default function AddProductDialog() {
                         </Label>
                     </div>
                     <div className="flex flex-col-reverse gap-1">
-                        <Textarea className="peer" name="name" />
+                        <Textarea className="peer" name="description" />
                         <Label>
                             Description
                         </Label>
@@ -83,7 +82,7 @@ export default function AddProductDialog() {
                         <h4 className="text-sm font-medium">Default Price</h4>
                         <div className="flex items-end gap-2 w-full">
                             <div className="flex flex-col-reverse gap-1">
-                                <Select defaultValue='usd' required>
+                                <Select defaultValue='usd' name="currency" required>
                                     <SelectTrigger className="max-w-full">
                                         <SelectValue placeholder="currency" />
                                     </SelectTrigger>
@@ -103,7 +102,7 @@ export default function AddProductDialog() {
                                 </Label>
                             </div>
                             <div className="flex flex-col-reverse gap-1">
-                                <Select defaultValue='one-time'>
+                                <Select defaultValue='one-time' name="interval">
                                     <SelectTrigger className="max-w-full">
                                         <SelectValue placeholder="interval"/>
                                     </SelectTrigger>
