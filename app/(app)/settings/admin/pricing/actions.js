@@ -83,3 +83,19 @@ export async function addPrice(productId, price, currency, interval, trial_perio
         };
     }
 }
+
+export async function toggleProductStatus(productId, actualState) {
+    try {
+        await stripe.products.update(productId, {
+            active: !actualState,
+        });
+
+        return {
+            success: 'Product status updated successfully',
+        };
+    } catch (error) {
+        return {
+            error: error.message,
+        };
+    }
+}
