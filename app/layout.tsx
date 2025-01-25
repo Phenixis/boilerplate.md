@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import { ValuesProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
     title: {
