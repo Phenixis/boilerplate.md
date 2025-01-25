@@ -160,9 +160,8 @@ export async function getStripePrices(active?: boolean) {
   }));
 }
 
-export async function getStripeProducts(active?: boolean) {
+export async function getStripeProducts() {
   const products = await stripe.products.list({
-    active: active ?? true,
     expand: ['data.default_price'],
   });
 
