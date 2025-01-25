@@ -35,6 +35,8 @@ export default function AddProductDialog() {
 
             setIsOpen(false);
 
+            window.location.reload();
+
             return result;
         },
         { error: '', success: '' }
