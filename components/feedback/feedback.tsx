@@ -17,7 +17,7 @@ import { sendFeedback } from "./actions";
 import { useEffect, useActionState, useState } from "react";
 import { ActionState } from "@/lib/auth/middleware";
 import { Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner";
 import { Textarea } from "../ui/textarea";
 
 export default function Feedback() {
@@ -33,7 +33,6 @@ export default function Feedback() {
             return result;
         }
         , { error: '', success: '' });
-    const { toast } = useToast();
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -45,13 +44,13 @@ export default function Feedback() {
 
     useEffect(() => {
         if (feedbackState.error) {
-            toast({
-                title: `Error`,
+            toast( `Error`,
+            {
                 description: feedbackState.error,
             });
         } else if (feedbackState.success) {
-            toast({
-                title: "Success",
+            toast("Success",
+            {
                 description: feedbackState.success,
             });
         }
