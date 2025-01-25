@@ -24,12 +24,11 @@ import { Label } from '@/components/ui/label';
 import { addProductAndDefaultPrice } from './actions';
 import { ActionState } from "@/lib/auth/middleware";
 import { useActionState, useState, useEffect } from 'react';
-import { Loader2, Plus } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast"
+import { Loader2, Plus } from 'lucide-react'; 4
+import { toast } from "sonner";
 
 export default function AddProductDialog() {
     const [isOpen, setIsOpen] = useState(false);
-    const { toast } = useToast();
     const [addProductState, addProductAction, isAddProductPending] = useActionState<ActionState, FormData>(
         async (state, formData) => {
             const result = await addProductAndDefaultPrice(state, formData);
@@ -43,13 +42,13 @@ export default function AddProductDialog() {
 
     useEffect(() => {
         if (addProductState.error) {
-            toast({
-                title: `Error`,
-                description: addProductState.error,
-            });
+            toast(`Error`,
+                {
+                    description: addProductState.error,
+                });
         } else if (addProductState.success) {
-            toast({
-                title: "Success",
+            toast("Success",
+            {
                 description: addProductState.success,
             });
         }
@@ -104,7 +103,7 @@ export default function AddProductDialog() {
                             <div className="flex flex-col-reverse gap-1">
                                 <Select defaultValue='one-time' name="interval">
                                     <SelectTrigger className="max-w-full">
-                                        <SelectValue placeholder="interval"/>
+                                        <SelectValue placeholder="interval" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="one-time">One-time</SelectItem>
