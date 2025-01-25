@@ -1,5 +1,7 @@
 import Products from './products';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
+import ProductsDisplay from './productsDisplay';
 
 export const metadata: Metadata = {
     title: 'Pricing',
@@ -14,7 +16,9 @@ export default function PricingPage() {
                     Pricing
                 </h1>
             </div>
-            <Products />
+            <Suspense fallback={<ProductsDisplay />}>
+                <Products />
+            </Suspense>
         </section>
     )
 }
