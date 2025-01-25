@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       const userWithTeam = await getTeamForUser(params?.user.id);
-      
+
       if (!userWithTeam) {
         const newTeam: NewTeam = {
           name: `${params?.user.email}'s Team`,
@@ -51,6 +51,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           db.insert(teamMembers).values(newTeamMember),
           logActivity(teamId, params?.user.id, ActivityType.SIGN_UP),
         ]);
+      } else {
+        await Promise.all([
+          logActivity(userWithTeam.id, params?.user.id, ActivityType.SIGN_IN),
+        ]);
+
       }
 
       return true
