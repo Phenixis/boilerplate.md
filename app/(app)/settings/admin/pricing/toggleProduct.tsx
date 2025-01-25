@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { toggleProductStatus } from "./actions"
 import { useState } from "react"
-import { useToast } from "@/hooks/use-toast"
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react"
 
 export default function ToggleProduct({
@@ -13,7 +13,6 @@ export default function ToggleProduct({
     productId: string
     initialStatus: boolean
 }) {
-    const { toast } = useToast();
     const [status, setStatus] = useState<boolean>(initialStatus)
     const [isPending, setIsPending] = useState<boolean>(false)
 
@@ -27,29 +26,29 @@ export default function ToggleProduct({
             const result = await toggleProductStatus(productId, currentStatus)
 
             if (result.success) {
-                toast({
-                    title: "Product status updated.",
-                    description: `Product is now ${!currentStatus ? "active" : "inactive"}.`,
-                });
+                toast("Product status updated.",
+                    {
+                        description: `Product is now ${!currentStatus ? "active" : "inactive"}.`,
+                    });
             } else {
-                toast({
-                    title: "Error updating product status.",
-                    description: result.error,
-                })
+                toast("Error updating product status.",
+                    {
+                        description: result.error,
+                    })
                 setStatus(currentStatus)
             }
         } catch (error: any) {
-            toast({
-                title: "Error updating product status.",
-                description: error.message,
-            })
+            toast("Error updating product status.",
+                {
+                    description: error.message,
+                })
             setStatus(currentStatus)
         }
         setIsPending(false)
     }
 
     return (
-        <Badge onClick={handleToggle} variant="outline" className="relative cursor-pointer">
+        <Badge onClick={handleToggle} variant="outline" className="relative cursor-pointer hover:bg-accent">
             {
                 isPending ? (
                     <Loader2 className="size-2 mr-1 animate-spin" />
