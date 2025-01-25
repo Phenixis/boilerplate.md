@@ -10,9 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-    Badge
-} from "@/components/ui/badge"
+import ToggleProduct from './toggleProduct';
 
 export default function Product({
     product
@@ -24,7 +22,7 @@ export default function Product({
             <CardHeader>
                 <CardTitle className="flex justify-between items-center">
                     {product.name}
-                    {product.active ? (<Badge variant="outline">Active</Badge>) : (<Badge variant="outline">Inactive</Badge>)}
+                    <ToggleProduct productId={product.id} initialStatus={product.active} />
                 </CardTitle>
             </CardHeader>
             <CardContent>
