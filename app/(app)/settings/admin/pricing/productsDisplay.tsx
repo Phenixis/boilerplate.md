@@ -23,7 +23,9 @@ export default function ProductsDisplay({
                         products.map(product => (
                             <Product key={product.id} product={product} />
                         )) : 
-                        <p>No products found</p>
+                        Array.from({ length: 1 }).map((_, i) => (
+                            <Product key={i} />
+                        ))
                     }
                 </CardContent>
             </Card>
