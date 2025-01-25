@@ -11,25 +11,47 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import ToggleProduct from './toggleProduct';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '@/components/ui/badge';
 
 export default function Product({
     product
 }: {
-    product: StripeProductWithPrices;
+    product?: StripeProductWithPrices;
 }) {
     return (
-        <Card>
+        <Card className="flex flex-col justify-between">
             <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                    {product.name}
-                    <ToggleProduct productId={product.id} initialStatus={product.active} />
-                </CardTitle>
+                {
+                    product ? (
+                        <CardTitle className="flex justify-between items-center">
+                            {product.name}
+                            <ToggleProduct productId={product.id} initialStatus={product.active} />
+                        </CardTitle>
+                    ) : (
+                        <CardTitle className="flex justify-between items-center">
+                            <Skeleton className="h-8 w-32" />
+                            <Badge variant="outline" className="animate-pulse">
+                                Loading...
+                            </Badge>
+                        </CardTitle>
+                    )
+                }
             </CardHeader>
             <CardContent>
-                <p>{product.description}</p>
+                {
+                    product ? (
+                        <p>{product.description}</p>
+                    ) : (
+                        <>
+                            <Skeleton className="h-4 w-full mb-1" />
+                            <Skeleton className="h-4 w-1/2" />
+                        </>
+                    )
+                }
                 <Table>
                     <TableHeader>
-                        <TableRow>
+                        <TableRow className={`${product ? "" : "animate-pulse"}`}>
                             <TableHead>Price</TableHead>
                             <TableHead>Interval</TableHead>
                             <TableHead>Trial Period</TableHead>
@@ -37,7 +59,7 @@ export default function Product({
                     </TableHeader>
                     <TableBody>
                         {
-                            product.prices.map(price => (
+                            product ? product.prices.map(price => (
                                 <TableRow key={price.id}>
                                     <TableCell>
                                         {
@@ -48,17 +70,23 @@ export default function Product({
                                         {price.interval}
                                     </TableCell>
                                     <TableCell>
-                                        {price.trialPeriodDays}
+                                        {price.trialPeriodDays} days
                                     </TableCell>
                                 </TableRow>
-                            ))
+                            )) : (
+                                <TableRow>
+                                    <TableCell colSpan={3}>
+                                        <Skeleton className="h-4" />
+                                    </TableCell>
+                                </TableRow>
+                            )
                         }
                     </TableBody>
                 </Table>
             </CardContent>
             <CardFooter>
-                <Button variant="outline">Add Price</Button>
+                <Button variant="outline"  className={`${product ? "" : "animate-pulse"}`}>Add Price</Button>
             </CardFooter>
-        </Card>
+        </Card >
     )
 }
