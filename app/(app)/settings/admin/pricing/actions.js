@@ -86,6 +86,21 @@ export async function addPrice(productId, price, currency, interval, trial_perio
 
 export async function toggleProductStatus(productId, actualState) {
     try {
+        const products = await stripe.products.list();
+
+        let nbActiveProducts = 0;
+        products.data.forEach(product => {
+            if (product.active) {
+                nbActiveProducts++;
+            }
+        });
+
+        if (nbActiveProducts === 1 && actualState) {
+            return {
+                error: 'You cannot deactivate the only active product',
+            };
+        }
+        
         await stripe.products.update(productId, {
             active: !actualState,
         });
