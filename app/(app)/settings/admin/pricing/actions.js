@@ -40,7 +40,6 @@ export async function addProductAndDefaultPrice(previousState, formData) {
 }
 
 export async function editProductAndDefaultPrice(previousState, formData) {
-    console.log(formData);
     const { name, price, currency } = Array.from(formData.entries()).reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
@@ -67,11 +66,24 @@ export async function editProductAndDefaultPrice(previousState, formData) {
         return priceResponse;
     }
     
-    await editProduct(productResponse.productId, name, (formData.get("description") != "" ? formData.get("description") : undefined), priceResponse.priceId);
-    await togglePriceStatus(formData.get("priceId"), true);
+    const productStatusResponse = await editProduct(productResponse.productId, name, (formData.get("description") != "" ? formData.get("description") : undefined), priceResponse.priceId);
 
-    if (formData.get("migrate") === "true") {
-        await migrateSubscriptions(formData.get("productId"), formData.get("priceId"));
+    if (productStatusResponse.error) {
+        return productStatusResponse
+    }
+
+    const priceStatusResponse = await togglePriceStatus(formData.get("priceId"), true);
+
+    if (priceStatusResponse.error) {
+        return priceStatusResponse;
+    }
+
+    if (formData.get("migrate") === "on") {
+        const migrateResponse = await migrateSubscriptions(formData.get("productId"), priceResponse.priceId);
+
+        if (migrateResponse.error) {
+            return migrateResponse;
+        }
     }
 
     return {
@@ -80,18 +92,29 @@ export async function editProductAndDefaultPrice(previousState, formData) {
 }
 
 export async function migrateSubscriptions(productId, priceId) {
-    const subscriptions = await stripe.subscriptions.list();
+    try {
 
-    subscriptions.data.forEach(async subscription => {
-        if (subscription.items.data[0].price.product === productId) {
-            await stripe.subscriptions.update(subscription.id, {
-                items: [{
-                    id: subscription.items.data[0].id,
-                    price: priceId,
-                }],
-            });
-        }
-    });
+        const subscriptions = await stripe.subscriptions.list();
+        
+        subscriptions.data.forEach(async subscription => {
+            if (subscription.items.data[0].price.product === productId) {
+                await stripe.subscriptions.update(subscription.id, {
+                    items: [{
+                        id: subscription.items.data[0].id,
+                        price: priceId,
+                    }],
+                });
+            }
+        });
+
+        return {
+            success: 'Subscriptions migrated successfully',
+        };
+    } catch (error) {
+        return {
+            error: error.message,
+        };
+    }
 }
 
 export async function addProduct(name, description) {
