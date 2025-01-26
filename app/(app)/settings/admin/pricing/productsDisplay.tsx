@@ -1,7 +1,7 @@
 import { StripeProductWithPrices } from "@/lib/payments/stripe"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Product from "./product";
-import AddProductDialog from "./addProductDialog";
+import ProductDialog from "./productDialog";
 
 export default function ProductsDisplay({
     products
@@ -14,7 +14,7 @@ export default function ProductsDisplay({
                 <CardHeader>
                     <CardTitle className="flex justify-between items-center">
                         Products
-                        <AddProductDialog />
+                        <ProductDialog />
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-3 gap-8">
