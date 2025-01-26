@@ -161,10 +161,18 @@ export async function getStripePrices(active?: boolean) {
   }));
 }
 
-export async function getStripeProducts() {
-  const products = await stripe.products.list({
+export async function getStripeProducts(active?:boolean) {
+  const listParams = {
     expand: ['data.default_price'],
-  });
+  } as Stripe.ProductListParams;
+
+  if (active === true) {
+    listParams.active = true;
+  } else if (active === false) {
+    listParams.active = false;
+  }
+
+  const products = await stripe.products.list(listParams);
 
   return products.data.map((product) => ({
     id: product.id,
