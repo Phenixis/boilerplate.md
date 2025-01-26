@@ -11,7 +11,7 @@ export const revalidate = 3600;
 
 export default async function PricingPage() {
   const [prices, products] = await Promise.all([
-    getStripePrices(),
+    getStripePrices(true),
     getStripeProducts(true),
   ]);
 
@@ -34,6 +34,7 @@ export default async function PricingPage() {
               key={price.id}
               name={product.name}
               price={price.unitAmount || 0}
+              currency={price.currency}
               interval={price.interval}
               trialDays={price.trialPeriodDays}
               features={product.description?.split('\n') || []}
