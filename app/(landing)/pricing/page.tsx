@@ -1,5 +1,10 @@
 import { getStripePrices, getStripeProducts } from '@/lib/payments/stripe';
 import PricingCard from './pricingCard';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Pricing',
+};
 
 // Prices are fresh for one hour max
 export const revalidate = 3600;
