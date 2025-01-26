@@ -15,7 +15,7 @@ export default function Help({
     return (
         <TooltipProvider>
             <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger className="cursor-default">
                     <CircleHelp className="size-4 text-gray-400" />
                 </TooltipTrigger>
                 <TooltipContent>
