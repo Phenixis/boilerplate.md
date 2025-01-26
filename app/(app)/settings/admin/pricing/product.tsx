@@ -13,6 +13,8 @@ import {
 import ToggleProduct from './toggleProduct';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
+import ProductDialog from './productDialog';
+import { Check } from 'lucide-react';
 
 export default function Product({
     product
@@ -41,7 +43,16 @@ export default function Product({
             <CardContent>
                 {
                     product ? (
-                        <p>{product.description}</p>
+                        <ul className={`grid ${
+                            (product.description || "").split("\n").length > 1 ? "grid-cols-2" : "grid-cols-1"
+                        }`}>
+                            {(product.description || "").split("\n").map((feature, index) => (
+                                <li key={index} className="flex items-center mb-2">
+                                    <Check className="size-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                                    <span className="text-sm text-gray-700">{feature}</span>
+                                </li>
+                            ))}
+                        </ul>
                     ) : (
                         <>
                             <Skeleton className="h-4 w-full mb-1" />
@@ -84,8 +95,13 @@ export default function Product({
                     </TableBody>
                 </Table>
             </CardContent>
-            <CardFooter>
-                <Button variant="outline"  className={`${product ? "" : "animate-pulse"}`}>Add Price</Button>
+            <CardFooter className="flex justify-between">
+                {
+                    product && (
+                        <ProductDialog productId={product.id} priceId={product.defaultPriceId} name={product.name} description={product.description} currency={product.prices[0].currency} price={product.prices[0].unitAmount || 0} interval={product.prices[0].interval} trial_period_days={product.prices[0].trialPeriodDays || 0} />
+                    )
+                }
+                <Button variant="outline" className={`${product ? "" : "animate-pulse"}`}>Add Price</Button>
             </CardFooter>
         </Card >
     )
