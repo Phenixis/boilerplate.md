@@ -145,10 +145,17 @@ export async function handleSubscriptionChange(
 }
 
 export async function getStripePrices(active?: boolean) {
-  const prices = await stripe.prices.list({
+  const listParams = {
     expand: ['data.product'],
-    active: active ?? true,
-  });
+  } as Stripe.PriceListParams;
+
+  if (active === true) {
+    listParams.active = true;
+  } else if (active === false) {
+    listParams.active = false;
+  }
+
+  const prices = await stripe.prices.list(listParams);
 
   return prices.data.map((price) => ({
     id: price.id,
@@ -204,7 +211,7 @@ export type StripeProductWithPrices = {
 
 export async function getStripeProductsAndPrices() {
   const products = await getStripeProducts();
-  const prices = await getStripePrices();
+  const prices = await getStripePrices(true);
 
   return products.map(product => {
       return {
