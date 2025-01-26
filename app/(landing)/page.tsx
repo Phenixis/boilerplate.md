@@ -2,14 +2,7 @@ import { CreditCard, Database, User, FlaskConical, MessagesSquare, Moon, SpellCh
 import CTA from '@/components/big/cta';
 import SocialProof from '@/components/big/socialProof';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-
-type Feature = {
-    title: string,
-    description: string | string[],
-    icon: any,
-    colSpan?: number,
-    rowSpan?: number
-}
+import BentoGrid, { Feature } from '@/components/big/bentoGrid';
 
 export default function HomePage() {
     const features: Feature[] = [
@@ -22,8 +15,8 @@ export default function HomePage() {
         { title: "Collect Feedback", description: ["Collect bugs, suggestions and feedback from users with the small button on the bottom right corner of this page.", "These are the one used to fill the wall of love below."], icon: MessagesSquare, rowSpan: 2 },
         { title: "Legal & GDPR", description: "The boilerplate is GDPR compliant and has a legal page.", icon: Moon },
         { title: "Accessibility", description: "The boilerplate is accessible and has a dark mode.", icon: Moon },
-        { title: "Translations", description: "React-i18next is already set up to translate your app in multiple languages.", icon: SpellCheck, colSpan: 2 },
-        { title: "TailwindCSS and Shadcn/ui", description: "Use the power of TailwindCSS and Shadcn/ui to build your components.", icon: Sparkles },
+        { title: "TailwindCSS and Shadcn/ui", description: "Use the power of TailwindCSS and Shadcn/ui to build your components.", icon: Sparkles, colSpan: 2},
+        { title: "Translations", description: "React-i18next is already set up to translate your app in multiple languages.", icon: SpellCheck },
     ]
 
     return (
@@ -57,32 +50,7 @@ export default function HomePage() {
                         <h2 className="text-4xl font-semibold">Features you’ve always dreamed of but never had the time to build.</h2>
                         <h3 className="text-2xl">Save time, money and mental health.</h3>
                     </header>
-                    <main className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
-                        { 
-                            features.map((feature, index) => (
-                                <div key={index} className={`relative group/Feature ${feature.colSpan ? 'col-span-' + feature.colSpan : 'col-span-1'} ${feature.rowSpan ? 'row-span-' + feature.rowSpan : 'row-span-1'}`}>
-                                    <div className="h-full w-full flex flex-col justify-between items-start bg-gray-50 dark:bg-gray-900 p-4 rounded-md ">
-                                        <div className="flex items-center justify-center h-12 px-2 w-fit rounded-md bg-primary text-white">
-                                            <feature.icon className="size-6 mr-2 group-hover/Feature:size-8 duration-100" />
-                                            <h3 className="text-lg font-medium group-hover/Feature:text-xl duration-100">{feature.title}</h3>
-                                        </div>
-                                        <p className="mt-2 text-base text-gray-500">
-                                            {Array.isArray(feature.description) ?
-                                                (
-                                                    feature.description.map((desc, index) => (
-                                                        <span className="inline-block mt-1" key={index}>
-                                                            {desc}
-                                                            <br />
-                                                        </span>
-                                                    ))
-                                                )
-                                                : feature.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </main>
+                    <BentoGrid features={features} />
                 </div>
             </section>
 
