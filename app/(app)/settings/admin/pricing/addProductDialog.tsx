@@ -19,13 +19,13 @@ import {
 } from "@/components/ui/select"
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useValues } from '@/lib/auth';
 import { Label } from '@/components/ui/label';
 import { addProductAndDefaultPrice } from './actions';
 import { ActionState } from "@/lib/auth/middleware";
 import { useActionState, useState, useEffect } from 'react';
-import { Loader2, Plus } from 'lucide-react'; 4
+import { Loader2, Plus } from 'lucide-react';
 import { toast } from "sonner";
+import Help from '@/components/big/help';
 
 export default function AddProductDialog() {
     const [isOpen, setIsOpen] = useState(false);
@@ -50,9 +50,9 @@ export default function AddProductDialog() {
                 });
         } else if (addProductState.success) {
             toast("Success",
-            {
-                description: addProductState.success,
-            });
+                {
+                    description: addProductState.success,
+                });
         }
     }, [addProductState]);
 
@@ -75,12 +75,14 @@ export default function AddProductDialog() {
                     </div>
                     <div className="flex flex-col-reverse gap-1">
                         <Textarea className="peer" name="description" />
-                        <Label>
-                            Description
-                        </Label>
+                        <div className="flex items-center space-x-1">
+                            <Label>
+                                Description
+                            </Label>
+                            <Help text="Write a feature per line, these features will be displayed one by one on the pricing card."/>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-2 w-full">
-                        <h4 className="text-sm font-medium">Default Price</h4>
                         <div className="flex items-end gap-2 w-full">
                             <div className="flex flex-col-reverse gap-1">
                                 <Select defaultValue='usd' name="currency" required>
