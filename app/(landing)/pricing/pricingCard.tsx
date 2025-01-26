@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardFooter, CardTitle } from '@/componen
 export default function PricingCard({
     name,
     price,
+    currency,
     interval,
     trialDays,
     features,
@@ -13,6 +14,7 @@ export default function PricingCard({
 }: {
     name: string;
     price: number;
+    currency: string;
     interval: string;
     trialDays: number;
     features: string[];
@@ -23,7 +25,14 @@ export default function PricingCard({
             <CardHeader>
                 <CardTitle>{name}</CardTitle>
                 <p className="text-4xl font-medium text-gray-900 dark:text-gray-100 mb-6">
-                    ${price / 100}{' '}
+                    {
+                        currency === 'usd' ? '$' : currency === 'gbp' ? '£' : ''
+                    }
+                    {price / 100}
+                    {
+                        currency === 'eur' ? '€' : ''
+                    }
+                    {' '}
                     <span className="text-xl font-normal text-gray-600">
                         per user / {interval}
                     </span>
