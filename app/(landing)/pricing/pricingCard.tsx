@@ -34,7 +34,7 @@ export default function PricingCard({
                     }
                     {' '}
                     <span className="text-xl font-normal text-gray-600">
-                        per user / {interval}
+                        per {interval}
                     </span>
                 </p>
             </CardHeader>
@@ -56,7 +56,7 @@ export default function PricingCard({
                 </ul>
             </CardContent>
             <CardFooter>
-                <form action={checkoutAction}>
+                <form action={checkoutAction} className="w-full">
                     <input type="hidden" name="priceId" value={priceId} />
                     <SubmitButton />
                 </form>
