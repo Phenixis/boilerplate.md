@@ -101,7 +101,6 @@ export default function Product({
                         <ProductDialog productId={product.id} priceId={product.defaultPriceId} name={product.name} description={product.description} currency={product.prices[0].currency} price={product.prices[0].unitAmount || 0} interval={product.prices[0].interval} trial_period_days={product.prices[0].trialPeriodDays || 0} />
                     )
                 }
-                <Button variant="outline" className={`${product ? "" : "animate-pulse"}`}>Add Price</Button>
             </CardFooter>
         </Card >
     )
