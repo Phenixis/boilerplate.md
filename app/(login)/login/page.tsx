@@ -28,8 +28,6 @@ export default function Page() {
                 if (email && typeof email === 'string') {
                     setEmail(email);
                     const result = await validateEmail(email);
-
-                    console.log(result);
                     
                     setEmailValidated(result);
                     setError(
@@ -95,7 +93,7 @@ export default function Page() {
                                 autoComplete="email"
                                 required
                                 maxLength={50}
-                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                                 placeholder="Enter your email"
                                 defaultValue={email}
                                 onChange={() => {
@@ -126,7 +124,7 @@ export default function Page() {
                                 required={emailValidated > 0}
                                 minLength={8}
                                 maxLength={100}
-                                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
                                 placeholder="Enter your password"
                             />
                         </div>
