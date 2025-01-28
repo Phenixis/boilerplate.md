@@ -24,7 +24,7 @@ export default function PricingCard({
         <Card className="flex flex-col justify-between">
             <CardHeader>
                 <CardTitle>{name}</CardTitle>
-                <p className="text-4xl font-medium text-gray-900 dark:text-gray-100 mb-6">
+                <p className="text-4xl font-medium text-nowrap text-gray-900 dark:text-gray-100 mb-6">
                     {
                         currency === 'usd' ? '$' : currency === 'gbp' ? '£' : ''
                     }
@@ -34,7 +34,7 @@ export default function PricingCard({
                     }
                     {' '}
                     <span className="text-xl font-normal text-gray-600">
-                        per {interval}
+                        per {interval === 'one-time' ? 'lifetime' : interval}
                     </span>
                 </p>
             </CardHeader>
