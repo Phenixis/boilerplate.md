@@ -20,7 +20,7 @@ export default function Footer({
     return (
         <footer className="border-t border-gray-200 dark:border-gray-700">
             <div className={`${fullWidth ? "" : "max-w-7xl"} mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col justify-between items-center space-y-4`}>
-                <section className="flex justify-between items-start w-full">
+                <section className="flex flex-col md:flex-row justify-between items-start space-y-4 md:space-y-0 w-full">
                     <article>
                         <h2 className="text-lg text-gray-500 font-black uppercase">Links</h2>
                         <p className="text-gray-700 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-300 hover:underline">
