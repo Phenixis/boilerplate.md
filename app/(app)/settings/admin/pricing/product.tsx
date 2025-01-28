@@ -43,9 +43,8 @@ export default function Product({
             <CardContent>
                 {
                     product ? (
-                        <ul className={`grid ${
-                            (product.description || "").split("\n").length > 1 ? "grid-cols-2" : "grid-cols-1"
-                        }`}>
+                        <ul className={`grid ${(product.description || "").split("\n").length > 1 ? "grid-cols-2" : "grid-cols-1"
+                            }`}>
                             {(product.description || "").split("\n").map((feature, index) => (
                                 <li key={index} className="flex items-center mb-2">
                                     <Check className="size-4 text-primary mr-2 mt-0.5 flex-shrink-0" />
@@ -74,7 +73,9 @@ export default function Product({
                                 <TableRow key={price.id}>
                                     <TableCell>
                                         {
-                                            price.unitAmount ? `${(price.unitAmount / 100).toFixed(2)} ${price.currency}` : "Free"
+                                            price.unitAmount ? (
+                                                `${price.currency === 'usd' ? '$' : price.currency === 'gbp' ? '£' : ''}${(price.unitAmount / 100).toFixed(2)}${price.currency === 'eur' ? '€' : ''}`
+                                            ) : "Free"
                                         }
                                     </TableCell>
                                     <TableCell>
