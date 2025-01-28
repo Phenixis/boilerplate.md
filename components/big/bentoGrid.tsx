@@ -12,7 +12,7 @@ function FeatureDisplay({
     feature: Feature
 }) {
     return (
-        <div className={`relative group/Feature ${feature.colSpan ? 'col-span-' + feature.colSpan : 'col-span-1'} ${feature.rowSpan ? 'row-span-' + feature.rowSpan : 'row-span-1'}`}>
+        <div className={`relative group/Feature ${feature.colSpan == 3 ? 'md:col-span-3' : feature.colSpan == 2 ? 'md:col-span-2' : 'md:col-span-1'} ${feature.rowSpan == 3 ? 'md:row-span-3' : feature.rowSpan == 2 ? 'md:row-span-2' : 'md:row-span-1'}`}> {/* We have to do it like this because tailwindcss scan the files to detect used classes, so we can't create them dynamically */}
             <div className="h-full w-full flex flex-col justify-between items-start bg-gray-50 dark:bg-gray-900 p-4 rounded-md ">
                 <div className="flex items-center justify-center h-12 px-2 w-fit text-primary">
                     <feature.icon className="size-6 mr-2 group-hover/Feature:size-8 duration-100" />
@@ -41,7 +41,7 @@ export default function BentoGrid({
     features: Feature[]
 }) {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
             {
                 features.map((feature, index) => (
                     <FeatureDisplay key={index} feature={feature} />
