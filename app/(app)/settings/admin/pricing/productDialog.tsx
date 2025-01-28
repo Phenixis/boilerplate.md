@@ -94,7 +94,7 @@ export default function ProductDialog({
                         Add Product
                     </DialogTrigger>
                 ) : (
-                    <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2 bg-primary text-primary-foreground dark:bg-primary dark:text-primary-foreground shadow hover:bg-primary/80 dark:hover:bg-primary/80">
+                    <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground">
                         Edit Product
                     </DialogTrigger>
                 )
