@@ -15,7 +15,7 @@ export default function HomePage() {
         { title: "Collect Feedback", description: ["Collect bugs, suggestions and feedback from users with the small button on the bottom right corner of this page.", "These are the one used to fill the wall of love below."], icon: MessagesSquare, rowSpan: 2 },
         { title: "Legal & GDPR", description: "The boilerplate is GDPR compliant and has a legal page.", icon: Moon },
         { title: "Accessibility", description: "The boilerplate is accessible and has a dark mode.", icon: Moon },
-        { title: "TailwindCSS and Shadcn/ui", description: "Use the power of TailwindCSS and Shadcn/ui to build your components.", icon: Sparkles, colSpan: 2},
+        { title: "TailwindCSS and Shadcn/ui", description: "Use the power of TailwindCSS and Shadcn/ui to build your components.", icon: Sparkles, colSpan: 2 },
         { title: "Translations", description: "React-i18next is already set up to translate your app in multiple languages.", icon: SpellCheck },
     ]
 
@@ -23,23 +23,21 @@ export default function HomePage() {
         <main>
             {/* <ABTest A={<h1>Test A</h1>} B={<h1>Test B</h1>} testName="homepage_heading" description="A test to determine which headline make the user stay longer on the page" location="/" /> */}
             <section className='py-4'>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center md:mx-auto">
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 tracking-tight sm:text-4xl md:text-5xl">
-                            Start your brilliant idea,&nbsp;<strong className="text-primary">with all the fluff already done</strong>
-                        </h1>
-                        {/* <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:mx-auto min-h-[87dvh] flex flex-col justify-between">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 tracking-tight sm:text-4xl md:text-5xl">
+                        Start your brilliant idea,&nbsp;<strong className="text-primary">with all the fluff already done</strong>
+                    </h1>
+                    {/* <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                             Start your brilliant idea with all the fluff already done and build your next startup in days.
                         </p> */}
-                        <AspectRatio ratio={16/9} className="mt-8">
-                            <div className="w-full h-full bg-gray-500 rounded-md">
+                    <AspectRatio ratio={16 / 9} className="mt-8">
+                        <div className="w-full h-full bg-gray-500 rounded-md">
 
-                            </div>
-                        </AspectRatio>
-                        <div className="mt-8 space-y-2 sm:max-w-lg sm:mx-auto sm:text-center">
-                            <CTA />
-                            <SocialProof />
                         </div>
+                    </AspectRatio>
+                    <div className="mt-8 space-y-2 sm:max-w-lg sm:mx-auto sm:text-center">
+                        <CTA />
+                        <SocialProof />
                     </div>
                 </div>
             </section>
