@@ -16,7 +16,6 @@ export default function Page() {
     const [emailValidated, setEmailValidated] = useState(0);
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
-
     const searchParams = useSearchParams();
     const redirect = searchParams.get('redirect');
     const priceId = searchParams.get('priceId');
