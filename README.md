@@ -12,7 +12,7 @@
 - [ ] Add the ability to create a password for an account created with a Provider
 - [ ] Add more Activity Logs
 - [ ] Add "type" to the feedback
-- [ ] Personnalize the pricing page based on the active Stripe products
+- [x] Personnalize the pricing page based on the active Stripe products
 - [ ] Add the privacy policy
 - [ ] Stylize the Terms of Service page
 - [ ] Personnalize the landing page to : ($100M Offers, Alez Hormozi)
@@ -20,10 +20,10 @@
     - Minimize the time delay (make it instant) and effort & sacrifice (make it easy)
 
 ### Admin
-- [ ] Add a product in the pricing section
-- [ ] Add a price in the pricing section
+- [x] Add a product in the pricing section
+- [ ] ~~Add a price in the pricing section~~ Removed
 - [ ] Add the ability to answer to a ticket
-- [ ] Add the ability to change the stauts of a ticket
+- [ ] Add the ability to change the status of a ticket
 - [ ] Add the ability to filter/sort tickets
 
 
@@ -110,3 +110,59 @@ In your Vercel project settings (or during deployment), add all the necessary en
 9. `RESEND_API_ENDPOINT`: Set this to a custom endpoint for the Resend Service.
 10. `APP_NAME`: Set this to the name of your application.
 11. `COMPANY_NAME`: Set this to the name of your company.
+
+## Updating your repo
+
+To update your repo, you have 2 methods.
+
+### (RECOMMENDED) Set up a Github Action to fetch updates regularly
+In the repo, you'll find the file `.github/workflows/sync-template.yml`. This file describe a Github Action that would fetch new changes every day.
+
+To make it working, you have to create a Personnal Access Token. Here is how :
+- Generate a Personnal Access Token.
+    - Go to [this page](https://github.com/settings/tokens).
+    - Click [Generate new token], then [Generate new token (classic)].
+    - Use an explicit name like "Boilerplate Sync".
+    - Set the expiration date as you wish, it is not recommended not to set an expiration, so set a period that suits you. Be aware that you will have to renew your PAT at the end of each period.
+    - Give your token all the repo rights. This token will be used only for this Github Action, you can trust us for that.
+    - Then click on [Generate token] and copy the token Github gave you.
+- Go in the Settings of the repo created with Boilerplate.md, click on [Secrets and Variables] and on [Actions].
+- Then create a new repository secret with the name PERSONAL_ACCESS_TOKEN and paste your token in the value.
+
+And you're setup ! Your repo will now update daily !
+
+### Update it manually
+
+Run these commands :
+```
+# Check if the branch exists
+git checkout main
+if git show-ref --quiet refs/heads/update_boilerplate; then
+  git checkout update_boilerplate
+else
+  git checkout -b update_boilerplate
+fi
+
+# Check if the upstream remote already exists
+if ! git remote | grep -q upstream; then
+  git remote add upstream https://github.com/Phenixis/boilerplate.md.git
+fi
+
+# Fetch the upstream and merge
+git fetch upstream
+git merge upstream/main --allow-unrelated-histories || true
+```
+
+There can be some conflicts, so fix them and then run these commands :
+```
+git push origin update_boilerplate
+git merge main // ensure the branch is up to date with the main
+```
+
+Here again, there can be some conflicts, so fix them and run these (last) commands :
+```
+git checkout main
+git merge update_boilerplate
+```
+
+Now you're up to date with the boilerplate !
