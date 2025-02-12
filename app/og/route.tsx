@@ -10,7 +10,6 @@ export function GET(request: Request) {
     (
       <div tw="flex flex-col w-full h-full items-start justify-start bg-white p-4">
         <div tw="flex">
-          <img src="https://boilerplate.maximeduhamel.com/icon.svg" alt={appName} />
           <h1 tw="text-4xl font-bold text-primary">
             {appName}
           </h1>
