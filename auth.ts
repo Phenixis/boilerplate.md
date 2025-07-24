@@ -1,17 +1,17 @@
 import NextAuth from "next-auth"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/lib/db/drizzle"
-import { users, accounts, authenticators, sessions, NewTeam, teams, ActivityType, NewTeamMember, teamMembers } from "@/lib/db/schema"
 import authConfig from "./auth.config"
 import { getTeamForUser } from "./lib/db/queries"
-import { logActivity } from "./app/(login)/actions"
+import { userTable, accountTable, authenticatorTable, sessionTable, NewTeam, teamTable, ActivityType, NewTeamMember, teamMemberTable } from "@/lib/db/schema"
+import { logActivity } from "@/lib/db/queries"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db, {
-    usersTable: users,
-    accountsTable: accounts,
-    authenticatorsTable: authenticators,
-    sessionsTable: sessions,
+    usersTable: userTable,
+    accountsTable: accountTable,
+    authenticatorsTable: authenticatorTable,
+    sessionsTable: sessionTable,
   }),
   pages: {
     signIn: "sign-in",
@@ -30,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: `${params?.user.email}'s Team`,
         };
 
-        const [createdTeam] = await db.insert(teams).values(newTeam).returning();
+        const [createdTeam] = await db.insert(teamTable).values(newTeam).returning();
 
         if (!createdTeam) {
           return false;
@@ -48,7 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         };
 
         await Promise.all([
-          db.insert(teamMembers).values(newTeamMember),
+          db.insert(teamMemberTable).values(newTeamMember),
           logActivity(teamId, params?.user.id, ActivityType.SIGN_UP),
         ]);
       } else {

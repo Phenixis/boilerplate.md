@@ -1,16 +1,17 @@
-import * from "./requirements"
+import * as lib from "./library"
+import { userTable } from "./user"
 
-export const session = pgTable("session", {
-  sessionToken: text("sessionToken").primaryKey(),
-  userId: text("userId")
+export const sessionTable = lib.pgTable("session", {
+  sessionToken: lib.text("sessionToken").primaryKey(),
+  userId: lib.text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  expires: timestamp("expires", { mode: "date" }).notNull(),
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  expires: lib.timestamp("expires", { mode: "date" }).notNull(),
 })
 
-export const sessionRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
+export const sessionRelations = lib.relations(sessionTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [sessionTable.userId],
+    references: [userTable.id],
   }),
 }));

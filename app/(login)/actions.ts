@@ -4,45 +4,25 @@ import { z } from 'zod';
 import { and, eq, sql } from 'drizzle-orm';
 import { db } from '@/lib/db/drizzle';
 import {
-  User,
-  users,
-  teams,
-  teamMembers,
-  activityLogs,
+  userTable,
+  teamTable,
+  teamMemberTable,
+  invitationTable,
+  ActivityType,
+  type User,
   type NewUser,
   type NewTeam,
   type NewTeamMember,
-  type NewActivityLog,
-  ActivityType,
-  invitations,
 } from '@/lib/db/schema';
 import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { createCheckoutSession } from '@/lib/payments/stripe';
-import { getUser, getUserWithTeam } from '@/lib/db/queries';
+import { getUser, getUserWithTeam, logActivity } from '@/lib/db/queries';
 import {
   validatedAction,
   validatedActionWithUser,
 } from '@/lib/auth/middleware';
-
-export async function logActivity(
-  teamId: number | null | undefined,
-  userId: string,
-  type: ActivityType,
-  ipAddress?: string
-) {
-  if (teamId === null || teamId === undefined) {
-    return;
-  }
-  const newActivity: NewActivityLog = {
-    teamId,
-    userId,
-    action: type,
-    ipAddress: ipAddress || '',
-  };
-  await db.insert(activityLogs).values(newActivity);
-}
 
 const signInSchema = z.object({
   email: z.string().email().min(3).max(255),
@@ -54,13 +34,13 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
 
   const userWithTeam = await db
     .select({
-      user: users,
-      team: teams,
+      user: userTable,
+      team: teamTable,
     })
-    .from(users)
-    .leftJoin(teamMembers, eq(users.id, teamMembers.userId))
-    .leftJoin(teams, eq(teamMembers.teamId, teams.id))
-    .where(eq(users.email, email))
+    .from(userTable)
+    .leftJoin(teamMemberTable, eq(userTable.id, teamMemberTable.userId))
+    .leftJoin(teamTable, eq(teamMemberTable.teamId, teamTable.id))
+    .where(eq(userTable.email, email))
     .limit(1);
 
   if (userWithTeam.length === 0) {
@@ -107,8 +87,8 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   const existingUser = await db
     .select()
-    .from(users)
-    .where(eq(users.email, email))
+    .from(userTable)
+    .where(eq(userTable.email, email))
     .limit(1);
 
   if (existingUser.length > 0) {
@@ -123,7 +103,7 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     role: 'owner', // Default role, will be overridden if there's an invitation
   };
 
-  const [createdUser] = await db.insert(users).values(newUser).returning();
+  const [createdUser] = await db.insert(userTable).values(newUser).returning();
 
   if (!createdUser) {
     return { error: 'Failed to create user. Please try again.' };
@@ -131,18 +111,18 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   let teamId: number;
   let userRole: string;
-  let createdTeam: typeof teams.$inferSelect | null = null;
+  let createdTeam: typeof teamTable.$inferSelect | null = null;
 
   if (inviteId) {
     // Check if there's a valid invitation
     const [invitation] = await db
       .select()
-      .from(invitations)
+      .from(invitationTable)
       .where(
         and(
-          eq(invitations.id, parseInt(inviteId)),
-          eq(invitations.email, email),
-          eq(invitations.status, 'pending')
+          eq(invitationTable.id, parseInt(inviteId)),
+          eq(invitationTable.email, email),
+          eq(invitationTable.status, 'pending')
         )
       )
       .limit(1);
@@ -152,16 +132,16 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
       userRole = invitation.role;
 
       await db
-        .update(invitations)
+        .update(invitationTable)
         .set({ status: 'accepted' })
-        .where(eq(invitations.id, invitation.id));
+        .where(eq(invitationTable.id, invitation.id));
 
       await logActivity(teamId, createdUser.id, ActivityType.ACCEPT_INVITATION);
 
       [createdTeam] = await db
         .select()
-        .from(teams)
-        .where(eq(teams.id, teamId))
+        .from(teamTable)
+        .where(eq(teamTable.id, teamId))
         .limit(1);
     } else {
       return { error: 'Invalid or expired invitation.' };
@@ -172,7 +152,7 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
       name: `${email}'s Team`,
     };
 
-    [createdTeam] = await db.insert(teams).values(newTeam).returning();
+    [createdTeam] = await db.insert(teamTable).values(newTeam).returning();
 
     if (!createdTeam) {
       return { error: 'Failed to create team. Please try again.' };
@@ -191,7 +171,7 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   };
 
   await Promise.all([
-    db.insert(teamMembers).values(newTeamMember),
+    db.insert(teamMemberTable).values(newTeamMember),
     logActivity(teamId, createdUser.id, ActivityType.SIGN_UP),
     setSession(createdUser),
   ]);
@@ -255,9 +235,9 @@ export const updatePassword = validatedActionWithUser(
 
     await Promise.all([
       db
-        .update(users)
+        .update(userTable)
         .set({ passwordHash: newPasswordHash })
-        .where(eq(users.id, user.id)),
+        .where(eq(userTable.id, user.id)),
       logActivity(userWithTeam?.teamId, user.id, ActivityType.UPDATE_PASSWORD),
     ]);
 
@@ -293,20 +273,20 @@ export const deleteAccount = validatedActionWithUser(
 
     // Soft delete
     await db
-      .update(users)
+      .update(userTable)
       .set({
         deletedAt: sql`CURRENT_TIMESTAMP`,
         email: sql`CONCAT(email, '-', id, '-deleted')`, // Ensure email uniqueness
       })
-      .where(eq(users.id, user.id));
+      .where(eq(userTable.id, user.id));
 
     if (userWithTeam?.teamId) {
       await db
-        .delete(teamMembers)
+        .delete(teamMemberTable)
         .where(
           and(
-            eq(teamMembers.userId, user.id),
-            eq(teamMembers.teamId, userWithTeam.teamId)
+            eq(teamMemberTable.userId, user.id),
+            eq(teamMemberTable.teamId, userWithTeam.teamId)
           )
         );
     }
@@ -329,7 +309,7 @@ export const updateAccount = validatedActionWithUser(
     const userWithTeam = await getUserWithTeam(user.id);
 
     await Promise.all([
-      db.update(users).set({ name, email }).where(eq(users.id, user.id)),
+      db.update(userTable).set({ name, email }).where(eq(userTable.id, user.id)),
       logActivity(userWithTeam?.teamId, user.id, ActivityType.UPDATE_ACCOUNT),
     ]);
 
@@ -356,11 +336,11 @@ export const removeTeamMember = validatedActionWithUser(
     }
 
     await db
-      .delete(teamMembers)
+      .delete(teamMemberTable)
       .where(
         and(
-          eq(teamMembers.id, memberId),
-          eq(teamMembers.teamId, userWithTeam.teamId)
+          eq(teamMemberTable.id, memberId),
+          eq(teamMemberTable.teamId, userWithTeam.teamId)
         )
       );
 
@@ -391,10 +371,10 @@ export const inviteTeamMember = validatedActionWithUser(
 
     const existingMember = await db
       .select()
-      .from(users)
-      .leftJoin(teamMembers, eq(users.id, teamMembers.userId))
+      .from(userTable)
+      .leftJoin(teamMemberTable, eq(userTable.id, teamMemberTable.userId))
       .where(
-        and(eq(users.email, email), eq(teamMembers.teamId, userWithTeam.teamId))
+        and(eq(userTable.email, email), eq(teamMemberTable.teamId, userWithTeam.teamId))
       )
       .limit(1);
 
@@ -405,12 +385,12 @@ export const inviteTeamMember = validatedActionWithUser(
     // Check if there's an existing invitation
     const existingInvitation = await db
       .select()
-      .from(invitations)
+      .from(invitationTable)
       .where(
         and(
-          eq(invitations.email, email),
-          eq(invitations.teamId, userWithTeam.teamId),
-          eq(invitations.status, 'pending')
+          eq(invitationTable.email, email),
+          eq(invitationTable.teamId, userWithTeam.teamId),
+          eq(invitationTable.status, 'pending')
         )
       )
       .limit(1);
@@ -420,7 +400,7 @@ export const inviteTeamMember = validatedActionWithUser(
     }
 
     // Create a new invitation
-    await db.insert(invitations).values({
+    await db.insert(invitationTable).values({
       teamId: userWithTeam.teamId,
       email,
       role,
@@ -450,8 +430,8 @@ enum emailValidationResult {
 export const validateEmail = async (email: string) => {
   const data = await db
     .select()
-    .from(users)
-    .where(eq(users.email, email))
+    .from(userTable)
+    .where(eq(userTable.email, email))
     .limit(1);
 
   if (data.length === 0) {

@@ -1,34 +1,35 @@
-import * from "./requirements"
+import * as lib from "./library"
+import { userTable } from "./user"
 
-export const accounts = pgTable(
+export const accountTable = lib.pgTable(
   "account",
   {
-    userId: text("userId")
+    userId: lib.text("userId")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    type: text("type").$type<AdapterAccountType>().notNull(),
-    provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
-    refresh_token: text("refresh_token"),
-    access_token: text("access_token"),
-    expires_at: integer("expires_at"),
-    token_type: text("token_type"),
-    scope: text("scope"),
-    id_token: text("id_token"),
-    session_state: text("session_state"),
+      .references(() => userTable.id, { onDelete: "cascade" }),
+    type: lib.text("type").$type<lib.AdapterAccountType>().notNull(),
+    provider: lib.text("provider").notNull(),
+    providerAccountId: lib.text("providerAccountId").notNull(),
+    refresh_token: lib.text("refresh_token"),
+    access_token: lib.text("access_token"),
+    expires_at: lib.integer("expires_at"),
+    token_type: lib.text("token_type"),
+    scope: lib.text("scope"),
+    id_token: lib.text("id_token"),
+    session_state: lib.text("session_state"),
   },
   (account) => [
     {
-      compoundKey: primaryKey({
+      compoundKey: lib.primaryKey({
         columns: [account.provider, account.providerAccountId],
       }),
     },
   ]
 )
 
-export const accountRelations = relations(accounts, ({ one }) => ({
-  user: one(users, {
-    fields: [accounts.userId],
-    references: [users.id],
+export const accountRelations = lib.relations(accountTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [accountTable.userId],
+    references: [userTable.id],
   }),
 }));

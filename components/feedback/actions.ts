@@ -2,7 +2,7 @@
 
 import { desc, and, eq, isNull, or, isNotNull, count } from 'drizzle-orm';
 import { db } from '@/lib/db/drizzle';
-import { ticket, ticketComment, Ticket, NewTicket, TicketStatus } from '@/lib/db/schema';
+import { ticketTable, ticketCommentTable, Ticket, NewTicket, TicketStatus } from '@/lib/db/schema';
 import { ActionState } from '@/lib/auth/middleware';
 
 export async function sendFeedback(state: ActionState, data: FormData) {
@@ -15,7 +15,7 @@ export async function sendFeedback(state: ActionState, data: FormData) {
         status: TicketStatus.OPEN,
     };
 
-    const result = await db.insert(ticket).values(newTicket);
+    const result = await db.insert(ticketTable).values(newTicket);
 
     return { success: 'Feedback sent successfully. You can now find it in the Ticket section, in your settings.' };
 }
@@ -27,9 +27,9 @@ export async function getFeedbacks(userId?: string, userEmail?: string) {
 
     const feedbacks: Ticket[] = await db
         .select()
-        .from(ticket)
-        .where(or(eq(ticket.openedBy, userId || ''), eq(ticket.openerEmail, userEmail || '')))
-        .orderBy(desc(ticket.createdAt));
+        .from(ticketTable)
+        .where(or(eq(ticketTable.openedBy, userId || ''), eq(ticketTable.openerEmail, userEmail || '')))
+        .orderBy(desc(ticketTable.createdAt));
 
     return feedbacks;
 }
@@ -37,8 +37,8 @@ export async function getFeedbacks(userId?: string, userEmail?: string) {
 export async function getAllFeedbacks() {
     const feedbacks = await db
         .select()
-        .from(ticket)
-        .orderBy(desc(ticket.createdAt));
+        .from(ticketTable)
+        .orderBy(desc(ticketTable.createdAt));
 
     return feedbacks;
 }
@@ -46,8 +46,8 @@ export async function getAllFeedbacks() {
 export async function getTicket(id: number) {
     const feedback = await db
         .select()
-        .from(ticket)
-        .where(eq(ticket.id, id));
+        .from(ticketTable)
+        .where(eq(ticketTable.id, id));
 
     return feedback[0];
 }
@@ -55,9 +55,9 @@ export async function getTicket(id: number) {
 export async function getComments(id: number) {
     const comments = await db
         .select()
-        .from(ticketComment)
-        .where(eq(ticketComment.ticketId, id))
-        .orderBy(desc(ticketComment.createdAt));
+        .from(ticketCommentTable)
+        .where(eq(ticketCommentTable.ticketId, id))
+        .orderBy(desc(ticketCommentTable.createdAt));
 
     return comments;
 }

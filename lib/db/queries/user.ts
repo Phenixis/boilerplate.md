@@ -1,7 +1,6 @@
-import * from "./requirements"
+import * as lib from "./library"
 import { getSession } from '@/lib/auth/session';
-import { user } from "../schema"
-
+import { userTable } from "../schema/user"
 
 export async function getUser(id?: string) {
   if (!id) {
@@ -15,12 +14,12 @@ export async function getUser(id?: string) {
       return null;
     }
 
-    const user = await db
+    const user = await lib.db
       .select()
-      .from(users)
-      .where(and(
-        (session.user.id ? eq(users.id, session.user?.id) : eq(users.email, session.user?.email)),
-        isNull(users.deletedAt))
+      .from(userTable)
+      .where(lib.and(
+        (session.user.id ? lib.eq(userTable.id, session.user?.id) : lib.eq(userTable.email, session.user?.email)),
+        lib.isNull(userTable.deletedAt))
       )
       .limit(1);
 
@@ -30,12 +29,12 @@ export async function getUser(id?: string) {
 
     return user[0];
   } else {
-    const user = await db
+    const user = await lib.db
       .select()
-      .from(users)
-      .where(and(
-        eq(users.id, id),
-        isNull(users.deletedAt))
+      .from(userTable)
+      .where(lib.and(
+        lib.eq(userTable.id, id),
+        lib.isNull(userTable.deletedAt))
       )
       .limit(1);
 
@@ -45,4 +44,28 @@ export async function getUser(id?: string) {
 
     return user[0];
   }
+}
+
+export async function getUserImages(n: number) {
+  const data = await lib.db
+    .select({
+      name: userTable.name,
+      image: userTable.image,
+    })
+    .from(userTable)
+    .where(lib.and(lib.isNull(userTable.deletedAt), lib.isNotNull(userTable.image)))
+    .limit(n * 2);
+
+  return data
+    .map(d => ({ name: d.name, image: d.image }))
+    .filter(image => image.name !== null && image.image !== null) as { name: string; image: string }[];
+}
+
+export async function getNumberUsers() {
+  return await lib.db
+    .select({
+      count: lib.count(userTable.id),
+    })
+    .from(userTable)
+    .where(lib.isNull(userTable.deletedAt));
 }

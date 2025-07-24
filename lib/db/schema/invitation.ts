@@ -1,29 +1,31 @@
-import * from "./requirements"
+import * as lib from "./library"
+import { teamTable } from "./team"
+import { userTable } from "./user"
 
-export const invitation = pgTable('invitations', {
-  id: serial('id').primaryKey(),
-  teamId: integer('team_id')
+export const invitationTable = lib.pgTable('invitation', {
+  id: lib.serial('id').primaryKey(),
+  teamId: lib.integer('team_id')
     .notNull()
-    .references(() => teams.id),
-  email: varchar('email', { length: 255 }).notNull(),
-  role: varchar('role', { length: 50 }).notNull(),
-  invitedBy: text("userId")
+    .references(() => teamTable.id),
+  email: lib.varchar('email', { length: 255 }).notNull(),
+  role: lib.varchar('role', { length: 50 }).notNull(),
+  invitedBy: lib.text("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  invitedAt: timestamp('invited_at').notNull().defaultNow(),
-  status: varchar('status', { length: 20 }).notNull().default('pending'),
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  invitedAt: lib.timestamp('invited_at').notNull().defaultNow(),
+  status: lib.varchar('status', { length: 20 }).notNull().default('pending'),
 });
 
-export const invitationRelations = relations(invitations, ({ one }) => ({
-  team: one(teams, {
-    fields: [invitations.teamId],
-    references: [teams.id],
+export const invitationRelations = lib.relations(invitationTable, ({ one }) => ({
+  team: one(teamTable, {
+    fields: [invitationTable.teamId],
+    references: [teamTable.id],
   }),
-  invitedBy: one(users, {
-    fields: [invitations.invitedBy],
-    references: [users.id],
+  invitedBy: one(userTable, {
+    fields: [invitationTable.invitedBy],
+    references: [userTable.id],
   }),
 }));
 
-export type Invitation = typeof invitations.$inferSelect;
-export type NewInvitation = typeof invitations.$inferInsert;
+export type Invitation = typeof invitationTable.$inferSelect;
+export type NewInvitation = typeof invitationTable.$inferInsert;

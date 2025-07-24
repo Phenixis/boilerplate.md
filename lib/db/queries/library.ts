@@ -1,4 +1,4 @@
-import { 
+export { 
     desc,
     asc,
     and, 
@@ -9,4 +9,4 @@ import {
     count,
     not
 } from 'drizzle-orm';
-import { db } from './drizzle';
+export { db } from '../drizzle';

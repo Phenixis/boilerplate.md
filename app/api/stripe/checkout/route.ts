@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { db } from '@/lib/db/drizzle';
-import { users, teams, teamMembers } from '@/lib/db/schema';
+import { userTable, teamTable, teamMemberTable } from '@/lib/db/schema';
 import { setSession } from '@/lib/auth/session';
 import { NextRequest, NextResponse } from 'next/server';
 import { stripe } from '@/lib/payments/stripe';
@@ -56,8 +56,8 @@ export async function GET(request: NextRequest) {
 
     const user = await db
       .select()
-      .from(users)
-      .where(eq(users.id, userId))
+      .from(userTable)
+      .where(eq(userTable.id, userId))
       .limit(1);
 
     if (user.length === 0) {
@@ -66,10 +66,10 @@ export async function GET(request: NextRequest) {
 
     const userTeam = await db
       .select({
-        teamId: teamMembers.teamId,
+        teamId: teamMemberTable.teamId,
       })
-      .from(teamMembers)
-      .where(eq(teamMembers.userId, user[0].id))
+      .from(teamMemberTable)
+      .where(eq(teamMemberTable.userId, user[0].id))
       .limit(1);
 
     if (userTeam.length === 0) {
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
     }
 
     await db
-      .update(teams)
+      .update(teamTable)
       .set({
         stripeCustomerId: customerId,
         stripeSubscriptionId: subscriptionId,
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
         subscriptionStatus: subscription.status,
         updatedAt: new Date(),
       })
-      .where(eq(teams.id, userTeam[0].teamId));
+      .where(eq(teamTable.id, userTeam[0].teamId));
 
     await setSession(user[0]);
     return NextResponse.redirect(new URL('/dashboard', request.url));

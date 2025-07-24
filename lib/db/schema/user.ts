@@ -1,29 +1,37 @@
-import * from "./requirements"
+import * as lib from "./library"
+import { teamMemberTable } from "./team-member"
+import { invitationTable } from "./invitation"
+import { activityLogTable } from "./activity-log"
+import { authenticatorTable } from "./authenticator"
+import { accountTable } from "./account"
+import { sessionTable } from "./session"
+import { ticketTable } from "./ticket"
 
-export const user = pgTable('user', {
-  id: text("id")
+
+export const userTable = lib.pgTable('user', {
+  id: lib.text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: varchar('name', { length: 100 }),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  passwordHash: text('password_hash'),
-  role: varchar('role', { length: 20 }).notNull().default('member'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  deletedAt: timestamp('deleted_at'),
-  image: text("image"),
+  name: lib.varchar('name', { length: 100 }),
+  email: lib.varchar('email', { length: 255 }).notNull().unique(),
+  emailVerified: lib.timestamp("emailVerified", { mode: "date" }),
+  passwordHash: lib.text('password_hash'),
+  role: lib.varchar('role', { length: 20 }).notNull().default('member'),
+  createdAt: lib.timestamp('created_at').notNull().defaultNow(),
+  updatedAt: lib.timestamp('updated_at').notNull().defaultNow(),
+  deletedAt: lib.timestamp('deleted_at'),
+  image: lib.text("image"),
 });
 
-export const userRelations = relations(user, ({ many }) => ({
-  teamMembers: many(teamMembers),
-  invitationsSent: many(invitations),
-  activityLogs: many(activityLogs),
-  authenticators: many(authenticators),
-  accounts: many(accounts),
-  sessions: many(sessions),
-  ticket: many(ticket),
+export const userRelations = lib.relations(userTable, ({ many }) => ({
+  teamMembers: many(teamMemberTable),
+  invitationsSent: many(invitationTable),
+  activityLog: many(activityLogTable),
+  authenticator: many(authenticatorTable),
+  account: many(accountTable),
+  session: many(sessionTable),
+  ticket: many(ticketTable),
 }));
 
-export type User = typeof user.$inferSelect;
-export type NewUser = typeof user.$inferInsert;
+export type User = typeof userTable.$inferSelect;
+export type NewUser = typeof userTable.$inferInsert;

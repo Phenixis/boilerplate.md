@@ -1,24 +1,26 @@
-import * from "./requirements"
+import * as lib from "./library"
+import { userTable } from "./user"
+import { ticketCommentTable } from "./ticket-comment"
 
-export const ticket = pgTable('ticket', {
-  id: serial('id').primaryKey(),
-  openedBy: text("userId")
-    .references(() => users.id, { onDelete: "cascade" }),
-  openerEmail: varchar('opener_email', { length: 255 }),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 20 }).notNull().default('open'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  closedAt: timestamp('closed_at'),
+export const ticketTable = lib.pgTable('ticket', {
+  id: lib.serial('id').primaryKey(),
+  openedBy: lib.text("userId")
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  openerEmail: lib.varchar('opener_email', { length: 255 }),
+  title: lib.varchar('title', { length: 255 }).notNull(),
+  description: lib.text('description').notNull(),
+  status: lib.varchar('status', { length: 20 }).notNull().default('open'),
+  createdAt: lib.timestamp('created_at').notNull().defaultNow(),
+  updatedAt: lib.timestamp('updated_at').notNull().defaultNow(),
+  closedAt: lib.timestamp('closed_at'),
 });
 
-export const ticketRelations = relations(ticket, ({ many }) => ({
-  comments: many(ticketComment)
+export const ticketRelations = lib.relations(ticketTable, ({ many }) => ({
+  comment: many(ticketCommentTable),
 }));
 
-export type Ticket = typeof ticket.$inferSelect;
-export type NewTicket = typeof ticket.$inferInsert;
+export type Ticket = typeof ticketTable.$inferSelect;
+export type NewTicket = typeof ticketTable.$inferInsert;
 
 export enum TicketStatus {
   OPEN = 'open',
