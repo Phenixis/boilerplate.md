@@ -7,15 +7,14 @@
 export * from "./account"
 export * from "./authenticator"
 
-/* Actions logging */
+/* Actions logging*/
 export * from "./activity-log"
 
-/* Team management */
+/* Team management // Required for Stripe integration */
 export * from "./invitation"
-export * from "./team-member"
 export * from "./team"
 
-/* Single user table and session management */
+/* Single user table and session management // Required for authentication */
 export * from "./user"
 export * from "./session"
 

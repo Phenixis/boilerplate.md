@@ -1,5 +1,5 @@
 import * as lib from "./library"
-import { teamMemberTable } from "./team-member"
+import { teamMemberTable } from "./team"
 import { invitationTable } from "./invitation"
 import { activityLogTable } from "./activity-log"
 import { authenticatorTable } from "./authenticator"
