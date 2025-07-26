@@ -40,5 +40,4 @@ next-env.d.ts
 postgres_data/
 
 # Migrations
-lib/db/migrations/
-lib/db/migrations/meta/
+lib/db/migrations/**/*
